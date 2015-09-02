@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="TransItem" table="tb_TransItem" mutable="false">
+		<id name="TransItem_TransNo" column="TransItem_TransNo" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="TransItem_TransDate" column="TransItem_TransDate"></property>
+		<property name="TransItem_StationNo" column="TransItem_StationNo"></property>
+		<property name="TransItem_ShiftNo" column="TransItem_ShiftNo"></property>
+		<property name="TransItem_ShiftDate" column="TransItem_ShiftDate"></property>
+		<property name="TransItem_NozzleNo" column="TransItem_NozzleNo"></property>	
+		<property name="TransItem_ItemCode" column="TransItem_ItemCode"></property>
+		<property name="TransItem_SellPrice" column="TransItem_SellPrice"></property>
+		<property name="TransItem_PayVol" column="TransItem_PayVol"></property>
+		<property name="TransItem_PayMoney" column="TransItem_PayMoney"></property>
+		<property name="TransItem_TransStat" column="TransItem_TransStat"></property>
+		<property name="TransItem_PT_Begin" column="TransItem_PT_Begin" type="java.lang.Double"></property>
+		<property name="TransItem_PT_End" column="TransItem_PT_End" type="java.lang.Double"></property>
+		<property name="TransItem_Tend" column="TransItem_Tend"></property>
+		<property name="TransItem_DitNo" column="TransItem_DitNo"></property>
+		<property name="TransItem_OpenTime" column="TransItem_OpenTime"></property>
+		<property name="TransItem_StopTime" column="TransItem_StopTime"></property>
+		<property name="TransItem_Temp" column="TransItem_Temp" type="java.lang.Float"></property>
+		<property name="TransItem_Density" column="TransItem_Density" type="java.lang.Float"></property>
+		<property name="TransItem_StartPressure" column="TransItem_StartPressure" type="java.lang.Float"></property>
+		<property name="TransItem_EndPressure" column="TransItem_EndPressure" type="java.lang.Float"></property>
+		<property name="TransItem_IsSync" column="TransItem_IsSync"></property>
+		<property name="TransItem_SyncDate" column="TransItem_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="加油站日时点加油分析图" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59870d46-195d-437b-88bf-e6e21f9a7325">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SignOneDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SignTwoDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OneYear" class="java.lang.String"/>
+	<parameter name="TwoYear" class="java.lang.String"/>
+	<parameter name="stationName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select Product_Name,OnesellVol,TwosellVol
+from tb_Product
+left join (select Tanksetting_ProductNum,sum(TransMonth_TransVol)/10000 as OnesellVol
+from tb_transmonthnozzleno
+left join tb_NozzleSetting on NozzleSetting_Phy_Noz=TransMonth_NozzleNo
+left join tb_Tanksetting on NozzleSetting_TankNum=Tanksetting_TankNum
+where TransMonth_TransDate like $P{SignOneDate} group by Tanksetting_ProductNum)AAA
+on AAA.Tanksetting_ProductNum=Product_Num
+left join (select Tanksetting_ProductNum,sum(TransMonth_TransVol)/10000 as TwosellVol
+from tb_transmonthnozzleno
+left join tb_NozzleSetting on NozzleSetting_Phy_Noz=TransMonth_NozzleNo
+left join tb_Tanksetting on NozzleSetting_TankNum=Tanksetting_TankNum
+where TransMonth_TransDate like $P{SignTwoDate} group by Tanksetting_ProductNum)BBB
+on BBB.Tanksetting_ProductNum=Product_Num]]>
+	</queryString>
+	<field name="Product_Name" class="java.lang.String">
+		<fieldDescription><![CDATA[产品名称]]></fieldDescription>
+	</field>
+	<field name="OnesellVol" class="java.math.BigDecimal"/>
+	<field name="TwosellVol" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="33" uuid="dbcf94be-480d-40a2-848d-16d064e08001"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stationName}+"年销售对比分析图"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="33" width="802" height="33" uuid="4733afab-6f5f-4711-a3e8-db858aa83cd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA["对比年份："+$P{OneYear}+"与"+$P{TwoYear}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="450" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="0" y="0" width="802" height="450" uuid="02e95cbf-fa11-45df-9b83-fc02c4630e88"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$P{OneYear}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Product_Name}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{OnesellVol}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA[$P{TwoYear}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Product_Name}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{TwosellVol}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisLabelExpression><![CDATA["油品品种"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font fontName="宋体" size="12" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["销售量（万升）"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font fontName="宋体" size="12" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+							</labelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

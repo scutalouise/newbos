@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+		"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="/" extends="struts-default">
+		<action name="" class="loginbosAction" method="skipStone">
+			<result name="input">/bos/login.jsp</result>
+			<result name="success">/bos/index.jsp</result>
+		</action>
+	</package>
+	<package name="bos" extends="struts-default">
+		<!-- ******************登陆******************************** -->
+		<action name="Login_bos" class="loginbosAction" method="Login">
+			<result name="success">/bos/index.jsp</result>
+			<result name="input">/bos/login.jsp</result>
+		</action>
+		<!-- ******************退出******************************** -->
+		<action name="TuiChu" class="loginbosAction" method="delSession">
+		<result name="toLogin" type="redirect">
+				<param name="location">/</param>
+			</result>
+			<!-- <result name="toLogin">/bos/login.jsp</result> -->
+		</action>
+	
+		<!-- **综合业务管理** -->
+		<action name="showStationDetail" class="integratedWorkAction" method="selStation">
+			<result name="success">/bos/IntegratedWork/stationDetail.jsp</result>
+		</action>
+		<action name="showProductDetail" class="integratedWorkAction" method="selProduct">
+			<result name="success">/bos/IntegratedWork/productDetail.jsp</result>
+		</action>
+		<action name="showPositionDetail" class="integratedWorkAction" method="selPosition">
+			<result name="success">/bos/IntegratedWork/positionTypeDetail.jsp</result>
+		</action>
+		<action name="showStaffDetail" class="integratedWorkAction" method="selStaff">
+			<result name="success">/bos/IntegratedWork/staffDetail.jsp?selType=${selType}&amp;Statue=${Statue}</result>
+		</action>
+		<!-- 油罐容积管理 -->
+		<action name="tankCubageManage" class="integratedWorkAction" method="toTankCubageManage">
+			<result name="success">/bos/IntegratedWork/tankCubageManage.jsp</result>
+		</action>
+		<action name="getTankCubageList" class="integratedWorkAction" method="getTankCubageList">
+			<result name="success">/bos/IntegratedWork/tankCubageList.jsp</result>
+		</action>
+		<action name="getTankCubageByHeight" class="integratedWorkAction" method="getTankCubageByHeight">
+			<result name="success">/bos/IntegratedWork/tankCubageList.jsp</result>
+		</action>
+		<action name="addOrDelTankCubage" class="integratedWorkAction" method="addOrDelTankCubage">
+		</action>
+		
+		<action name="saveProductSupplier" class="integratedWorkAction" method="saveProductSupplier">
+			<result name="success">/bos/IntegratedWork/addSupplier.jsp?Num=${Num}</result>
+			<result name="input">/bos/IntegratedWork/addSupplier.jsp?Num=${Num}</result>
+		</action>
+		<action name="updateProductSupplier" class="integratedWorkAction" method="updateProductSupplier">
+			<result name="success">/bos/IntegratedWork/updateSupplier.jsp?Num=${Num}</result>
+			<result name="input">/bos/IntegratedWork/updateSupplier.jsp?Num=${Num}</result>
+		</action>
+		<action name="selProductSupplier" class="integratedWorkAction" method="selProductSupplier">
+			<result name="success">/bos/IntegratedWork/selSupplier.jsp?SupplierKey=${SupplierKey}</result>
+		</action>
+
+		<!-- **能耗管理** -->
+		<action name="addDailySource" class="sourceUsedAction" method="saveDailySourceed">
+			<result name="success">/bos/SourceUsed/addDailySource.jsp</result>
+			<result name="input">/bos/SourceUsed/addDailySource.jsp</result>
+		</action>
+		<action name="showSource" class="sourceUsedAction" method="showSourceed">
+			<result name="success">/bos/SourceUsed/selSource.jsp?startDate=${startDate}&amp;endDate=${endDate}</result>
+		</action>
+		<action name="updateDailySource" class="sourceUsedAction" method="updateDailySourceed">
+			<result name="success">/bos/SourceUsed/updateDailySource.jsp</result>
+			<result name="input">/bos/SourceUsed/updateDailySource.jsp</result>
+		</action>
+		<action name="signDailySourceed" class="sourceUsedAction" method="signDailySourceed">
+			<result name="success" type="redirect">
+				<param name="location">/bos/showSource.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/showSource.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		<action name="selSourcePlan" class="sourceUsedAction" method="selSourcePlan">
+			<result name="success">/bos/SourceUsed/selSourcePlan.jsp?startDate=${startDate}&amp;endDate=${endDate}</result>
+		</action>
+		<!--  
+		<action name="delDailySource" class="sourceUsedAction" method="delDailySourceed">
+			<result name="success" type="redirect">
+				<param name="location">/bos/showSource.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/showSource.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		-->
+		<!-- **产品管理** -->
+		<action name="selSellPrice" class="productManageAction" method="selSellPrice">
+			<result name="success">/bos/ProductManage/sellPriceDetail.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;ProductType=${ProductType}&amp;ProductName=${ProductName}</result>
+		</action>
+		<action name="selChangePetrol" class="productManageAction" method="selChangePetrol">
+			<result name="success">/bos/ProductManage/changePetrolDetail.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;TankNum=${TankNum}</result>
+		</action>
+		<action name="selSellPricePlan" class="productManageAction" method="selSellPricePlan">
+			<result name="success">/bos/ProductManage/selSellPricePlan.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;ProductNum=${ProductNum}</result>
+		</action>
+		<action name="saveSellPricePlan" class="productManageAction" method="saveSellPricePlan">
+			<result name="success">/bos/ProductManage/addSellPricePlan.jsp</result>
+			<result name="input">/bos/ProductManage/addSellPricePlan.jsp</result>
+		</action>                                   
+		<action name="delSellPricePlan" class="productManageAction" method="delSellPricePlan">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selSellPricePlan.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selSellPricePlan.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		<!-- **员工管理** -->
+		<action name="showStaffGroupInfo" class="staffManageAction" method="showStaffGroupInfo">
+			<result name="success">/bos/StaffManage/selStaffGroupsInfo.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;selType=${selType}&amp;selWord=${selWord}</result>
+		</action>		
+		<!-- **银行存款管理** -->
+		<action name="addBankReceipt" class="businessMsgManageAction" method="saveBankReceipt">
+			<result name="success">/bos/BusinessMsgManage/addBankReceipt.jsp</result>
+			<result name="input">/bos/BusinessMsgManage/addBankReceipt.jsp</result>
+		</action>
+		<action name="selBankReceipt" class="businessMsgManageAction" method="showBankReceip">
+			<result name="success">/bos/BusinessMsgManage/selBankReceipt.jsp?startDate=${startDate}&amp;endDate=${endDate}</result>
+		</action>
+		<action name="updateBankReceip" class="businessMsgManageAction" method="updateBankReceip">
+			<result name="success">/bos/BusinessMsgManage/updateBankReceipt.jsp</result>
+			<result name="input">/bos/BusinessMsgManage/updateBankReceipt.jsp</result>
+		</action>
+		<action name="signBankReceip" class="businessMsgManageAction" method="signBankReceip">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selBankReceipt.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selBankReceipt.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		<!-- 
+		<action name="delBankReceip" class="businessMsgManageAction" method="delBankReceip">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selBankReceipt.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selBankReceipt.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		 -->
+		<!-- **库存管理** -->
+		<action name="saveRepertory" class="repertoryManageAction" method="saveRepertory">
+			<result name="success">/bos/RepertoryManage/addRepertory.jsp</result>
+			<result name="input">/bos/RepertoryManage/addRepertory.jsp</result>
+		</action>
+		<action name="selRepertory" class="repertoryManageAction" method="selRepertory">
+			<result name="success">/bos/RepertoryManage/selRepertory.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;ProductType=${ProductType}&amp;ShiftNo=${ShiftNo}</result>
+		</action>
+		<action name="signRepertory" class="repertoryManageAction" method="signRepertory">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selRepertory.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="ShiftNo">${ShiftNo}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selRepertory.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="ShiftNo">${ShiftNo}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		<action name="updateRepertory" class="repertoryManageAction" method="updateRepertory">
+			<result name="success1">/bos/RepertoryManage/updateOilRepertory.jsp</result>
+			<result name="input1">/bos/RepertoryManage/updateOilRepertory.jsp</result>
+			<result name="success2">/bos/RepertoryManage/updateGasRepertory.jsp</result>
+			<result name="input2">/bos/RepertoryManage/updateGasRepertory.jsp</result>
+			
+		</action>
+		<!--  
+		<action name="delRepertory" class="repertoryManageAction" method="delRepertory">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selRepertory.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selRepertory.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="Msg">${Msg}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		-->
+		
+		<!-- **采购作业管理** -->	
+		<action name="createOrderBillNum" class="purchaseManage" method="createOrderBillNum">
+			<result name="success">/bos/PurchaseManage/addPurchase.jsp</result>
+		</action>
+		<action name="addOrderBill" class="purchaseManage" method="saveOrderBill">
+			<result name="success" type="redirect">
+				<param name="location">/bos/createOrderBillNum.action</param>
+				<param name="StationNo">${StationNo}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/createOrderBillNum.action</param>
+				<param name="StationNo">${StationNo}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		<action name="selOrderBill" class="purchaseManage" method="selOrderBill">
+			<result name="success">/bos/PurchaseManage/selPurchase.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+		</action>
+		<action name="selOrderBill_01" class="purchaseManage" method="selOrderBill">
+			<result name="success">/bos/PurchaseManage/restockBillManage.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+		</action>
+		<action name="selOrderBill_02" class="purchaseManage" method="selOrderBill">
+			<result name="success">/bos/PurchaseManage/PurchaseManage.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+		</action>
+			<!-- 确认订单 -->
+		<action name="verifyOrderBill" class="purchaseManage" method="verifyOrderBill">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selOrderBill_02.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="QueryType">${QueryType}</param>
+				<param name="QueryContext">${QueryContext}</param>
+				<param name="Status">${Status}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selOrderBill_02.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="QueryType">${QueryType}</param>
+				<param name="QueryContext">${QueryContext}</param>
+				<param name="Status">${Status}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+			<!-- 取消订单 -->
+		<action name="cancelOrderBill" class="purchaseManage" method="cancelOrderBill">
+			<result name="success" type="redirect">
+				<!--<param name="location">/bos/selOrderBill_02.action</param>  -->
+				<param name="location">/bos/selOrderBill.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="QueryType">${QueryType}</param>
+				<param name="QueryContext">${QueryContext}</param>
+				<param name="Status">${Status}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<!-- <param name="location">/bos/selOrderBill_02.action</param> -->
+				<param name="location">/bos/selOrderBill.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="QueryType">${QueryType}</param>
+				<param name="QueryContext">${QueryContext}</param>
+				<param name="Status">${Status}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+			<!-- 订货 -->
+		<action name="orderGoods" class="purchaseManage" method="orderGoods">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selOrderBill_02.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="QueryType">${QueryType}</param>
+				<param name="QueryContext">${QueryContext}</param>
+				<param name="Status">${Status}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selOrderBill_02.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="QueryType">${QueryType}</param>
+				<param name="QueryContext">${QueryContext}</param>
+				<param name="Status">${Status}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>	
+		<!-- 卸油 -->
+		<action name="UnloadingOil" class="purchaseManage" method="fetchTanksData">
+			<result name="shallowStone">/bos/PurchaseManage/HandleUnloadingOil.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<!-- <result name="input">/bos/PurchaseManage/UnloadingOilFalse.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="success01">/bos/PurchaseManage/UnloadingOilSuccess.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="success00">/bos/PurchaseManage/UnloadingOilSuccess.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="input01">/bos/PurchaseManage/UnloadingOil.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="input01_1">/bos/PurchaseManage/UnloadingOilCloseNozzleFalse.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="input01_2">/bos/PurchaseManage/UnloadingOilReadDataFalse.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="input00">/bos/PurchaseManage/UnloadingOilEnd.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="input00_1">/bos/PurchaseManage/UnloadingOilCloseNozzleFalse.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result>
+			<result name="input00_2">/bos/PurchaseManage/UnloadingOilReadDataFalse.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;QueryType=${QueryType}&amp;QueryContext=${QueryContext}&amp;Status=${Status}</result> -->
+		</action>
+		<action name="toSaveOilUnloadingData" class="purchaseManage" method="toSaveOilUnloadingData">
+			<result name="success">/bos/PurchaseManage/AddOilUnloadingData.jsp</result>
+		</action>
+		<action name="saveOilUnloadingData" class="purchaseManage" method="saveOilUnloadingData">
+			<result name="success">/bos/PurchaseManage/AddOilUnloadingData.jsp</result>
+		</action>
+		<!-- 入库单填写 -->
+		<action name="toAddOilRestockbillHtml" class="purchaseManage" method="toAddRestockBillHtml">
+			<result name="success">/bos/PurchaseManage/addOilRestockbill.jsp</result>
+		</action>	
+		<action name="toAddGasRestockbillHtml" class="purchaseManage" method="toAddRestockBillHtml">
+			<result name="success">/bos/PurchaseManage/addGasRestockbill.jsp</result>
+		</action>
+		<action name="addGasRestockbill" class="purchaseManage" method="saveRestockBill">
+			<result name="success">/bos/PurchaseManage/addGasRestockbill.jsp</result>
+			<result name="input">/bos/PurchaseManage/addGasRestockbill.jsp</result>
+		</action>	
+		<action name="addOilRestockbill" class="purchaseManage" method="saveRestockBill">
+			<result name="success">/bos/PurchaseManage/addOilRestockbillSuccess.jsp</result>
+			<result name="input">/bos/PurchaseManage/addOilRestockbillFalse.jsp</result>
+		</action>
+		<!-- 密度管理 -->
+		<action name="selDensity" class="purchaseManage" method="selDensity">
+			<result name="success">/bos/PurchaseManage/DensityManage.jsp?ProductNum=${ProductNum}</result>
+		</action>
+		<action name="saveDensity" class="purchaseManage" method="saveDensity">
+			<result name="success">/bos/PurchaseManage/addDensity.jsp</result>
+			<result name="input">/bos/PurchaseManage/addDensity.jsp</result>
+		</action>
+		<action name="delDensity" class="purchaseManage" method="delDensity">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selDensity.action</param>
+				<param name="Density_ProdunctNum">${Density_ProdunctNum}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selDensity.action</param>
+				<param name="Density_ProdunctNum">${Density_ProdunctNum}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		<action name="updateDensity" class="purchaseManage" method="updateDensity">
+			<result name="success"  type="redirect">/bos/selDensity.action</result>
+			<result name="input">/bos/PurchaseManage/updateDensity.jsp</result>
+		</action>
+		
+		<!-- **日结管理** -->	
+		<action name="selDayTransVerify" class="businessMsgManageAction" method="selDayTransVerify">
+			<result name="success">/bos/BusinessMsgManage/selDayTransCardVerify.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;Status=${Status}</result>
+		</action>
+		<action name="dayTransCardAccountCheck" class="businessMsgManageAction" method="dayTransCardAccountCheck">
+			<result name="success" type="redirect">/bos/BusinessMsgManage/selDayTransVerify.action</result>
+			<result name="NetError">/bos/BusinessMsgManage/dayTransCardAccountCheck.jsp</result>
+			<result name="false">/bos/BusinessMsgManage/dayTransCardAccountCheck.jsp</result>	
+		</action>
+		<!-- **销售计划管理** -->
+		<action name="selSellingPlan" class="sellingPlanMangeAction" method="selSellingPlan">
+			<result name="success">/bos/SalesPlanning/selSalesPlan.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;ProductName=${ProductName}</result>
+		</action>
+		<action name="selSellingPlan1" class="sellingPlanMangeAction" method="selSellingPlan">
+			<result name="success">/bos/SalesPlanning/salesPlanManage.jsp?startDate=${startDate}&amp;endDate=${endDate}&amp;ProductName=${ProductName}</result>
+		</action>
+		<action name="addSellingPlan" class="sellingPlanMangeAction" method="addSellingPlan">
+			<result name="success">/bos/SalesPlanning/addSalesPlan.jsp</result>
+			<result name="input">/bos/SalesPlanning/addSalesPlan.jsp</result>
+		</action>
+		<action name="updateSellingPlan" class="sellingPlanMangeAction" method="updateSellingPlan">
+			<result name="success">/bos/SalesPlanning/updateSalesPlan.jsp</result>
+			<result name="input">/bos/SalesPlanning/updateSalesPlan.jsp</result>
+		</action>
+		<action name="verifySellingPlan" class="sellingPlanMangeAction" method="verifySellingPlan">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selSellingPlan1.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="ProductName">${ProductName}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selSellingPlan1.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="ProductName">${ProductName}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		<action name="deleteSellingPlan" class="sellingPlanMangeAction" method="deleteSellingPlan">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selSellingPlan1.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="ProductName">${ProductName}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selSellingPlan1.action</param>
+				<param name="startDate">${startDate}</param>
+				<param name="endDate">${endDate}</param>
+				<param name="ProductName">${ProductName}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+		
+				
+		<!-- **班结审核管理** -->	
+		<action name="selShiftVerify" class="businessMsgManageAction" method="selShiftVerify">
+			<result name="success">/bos/BusinessMsgManage/selShiftVerify.jsp?startDate=${startDate}&amp;endDate=${endDate}</result>
+		</action>
+		<action name="selShiftNozzle" class="businessMsgManageAction" method="selShiftNozzle">
+			<result name="success">/bos/BusinessMsgManage/shiftNozzleVerify.jsp?ShiftDate=${ShiftDate}&amp;
+			ShiftNo=${ShiftNo}&amp;startDate=${startDate}&amp;endDate=${endDate}
+			&amp;Shift_StartTime=${Shift_StartTime}&amp;Shift_EndTime=${Shift_EndTime}&amp;Shift_CreateTime=${Shift_CreateTime}</result>
+		</action>
+		<action name="shiftVerify" class="businessMsgManageAction" method="shiftVerify">
+			<result name="success">/bos/BusinessMsgManage/selShiftVerify.jsp?startDate=${startDate}&amp;endDate=${endDate}</result>
+		</action>
+		
+		<!-- 促销信息管理 -->
+		
+		<action name="selPromotion" class="businessMsgManageAction" method="selPromotion">
+			<result name="success">/bos/BusinessMsgManage/selPromotion.jsp?ProductNum=${ProductNum}</result>
+		</action>
+		<action name="savePromotionInfo" class="businessMsgManageAction" method="savePromotionInfo">
+			<result name="success">/bos/BusinessMsgManage/addPromotionInfo.jsp</result>
+			<result name="input">/bos/BusinessMsgManage/addPromotionInfo.jsp</result>
+		</action>
+		<action name="savePromotion" class="businessMsgManageAction" method="savePromotion">
+			<result name="success">/bos/BusinessMsgManage/addPromotion.jsp</result>
+			<result name="input">/bos/BusinessMsgManage/addPromotion.jsp</result>
+		</action>
+		<action name="delPromotion" class="businessMsgManageAction" method="delPromotion">
+			<result name="success" type="redirect">
+				<param name="location">/bos/selPromotion.action</param>
+				<param name="ProductNum">${ProductNum}</param>
+				<param name="Msg">${Msg}</param>
+			</result>
+			<result name="input" type="redirect">
+				<param name="location">/bos/selPromotion.action</param>
+				<param name="ProductNum">${ProductNum}</param>
+				<param name="error">${error}</param>
+			</result>
+		</action>
+	</package>
+	
+	<!-- ******************JSON数据******************************** -->
+	<package name="bosJson" extends="json-default">
+		<action name="leftList" class="loginbosAction" method="leftList">
+			<result name="success" type="json">
+				<param name="root">functionList</param>
+			</result>
+		</action>
+		<!-- 员工查询条件自动补全 -->
+		<action name="staffSelAutoComplete" class="integratedWorkAction" method="staffSelAutoComplete">
+			<result name="success" type="json">
+				<param name="root">autoComplete</param>
+			</result>
+		</action>
+		<!-- **库存管理JSON** -->		
+		<action name="selProduct" class="repertoryManageAction" method="selProduct">
+			<result name="success" type="json">
+				<param name="root">product</param>
+			</result>
+		</action>
+		<action name="selTank" class="repertoryManageAction" method="selTank">
+			<result name="success" type="json">
+				<param name="root">tank</param>
+			</result>
+		</action>
+		<action name="selShiftNo1" class="repertoryManageAction" method="selShiftNo">
+			<result name="success" type="json">
+				<param name="root">ShiftNo</param>
+			</result>
+		</action>
+		<!-- **产品管理JSON** -->
+		<action name="selTank_ChangePetrol" class="productManageAction" method="selTank">
+			<result name="success" type="json">
+				<param name="root">Tank</param>
+			</result>
+		</action>
+		<!-- **产品当前价格JSON** -->
+		<action name="SellPrice" class="businessMsgManageAction" method="sellPrice">
+			<result name="success" type="json">
+				<param name="root">SellPrice</param>
+			</result>
+		</action>
+		<!-- **当班枪JSON** -->
+		<action name="selShiftNozzleJson" class="businessMsgManageAction" method="selShiftNozzleJson">
+			<result name="success" type="json">
+				<param name="root">shiftVerifyJson</param>
+			</result>
+		</action>
+		<!-- **保存补录交易信息** -->
+		<action name="saveTransItem" class="businessMsgManageAction" method="saveTransItem">
+			<result name="success" type="json">
+				<param name="root">Msg</param>
+			</result>
+		</action>
+		<!-- **报表管理JSON** -->
+		<action name="selShiftNo" class="reportManageAction" method="selShiftNo">
+			<result name="success" type="json">
+				<param name="root">ShiftNo</param>
+			</result>
+		</action>
+		<!-- **采购作业JSON** -->
+		<action name="selOrderBillDetail" class="purchaseManage" method="selOrderBillDetail">
+			<result name="success" type="json">
+				<param name="root">OrderBillDetail</param>
+			</result>
+		</action>
+		<action name="ProductSupplierJSON" class="integratedWorkAction" method="ProductSupplierJSON">
+			<result name="success" type="json">
+				<param name="root">ProductSupplier</param>
+			</result>
+		</action>
+		<!-- 促销品信息 -->
+		<action name="selPromotionInfo" class="businessMsgManageAction" method="selPromotionInfo">
+			<result name="success" type="json">
+				<param name="root">promotionInfoS</param>
+			</result>
+		</action>
+		<action name="promoteSalesManage" class="businessMsgManageAction" method="toPromoteSalesManage">
+			<result name="success">/bos/BusinessMsgManage/promoteSalesManage.jsp</result>
+		</action>
+		<action name="getPromoteSalesList" class="businessMsgManageAction" method="getPromoteSalesList">
+			<result name="success">/bos/BusinessMsgManage/promoteScaleList.jsp</result>
+		</action>
+		
+		<action name="addOrDelPromotionInfo" class="businessMsgManageAction" method="addOrDelPromotionInfo">
+		</action>
+		
+		<!-- 查询枪信息 -->
+		<action name="selNozzle" class="reportManageAction" method="selNozzle">
+			<result name="success" type="json">
+				<param name="root">NozzleDetail</param>
+			</result>
+		</action>
+	</package>
+	
+</struts>

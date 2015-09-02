@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="MonthDateAera" table="tb_MonthDateAera">
+		<composite-id>
+			<key-property name="MonthDateAera_StartDate" column="MonthDateAera_StartDate"></key-property>
+			<key-property name="MonthDateAera_NextEndDate" column="MonthDateAera_NextEndDate"></key-property>
+		</composite-id>
+	</class>
+
+</hibernate-mapping>

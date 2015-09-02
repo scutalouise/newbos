@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="TransMonth" table="tb_TransMonthNozzleNo">
+		<composite-id>
+			<key-property name="TransMonth_TransDate" column="TransMonth_TransDate"></key-property>
+			<key-property name="TransMonth_StationNo" column="TransMonth_StationNo"></key-property>
+			<key-property name="TransMonth_CustomerType" column="TransMonth_CustomerType"></key-property>
+			<key-property name="TransMonth_NozzleNo" column="TransMonth_NozzleNo"></key-property>
+		</composite-id>
+		<property name="TransMonth_TransMoney" column="TransMonth_TransMoney"></property>
+		<property name="TransMonth_PaidInMoney" column="TransMonth_PaidInMoney"></property>
+		<property name="TransMonth_TransVol" column="TransMonth_TransVol"></property>
+		<property name="TransMonth_TransCount" column="TransMonth_TransCount"></property>
+		<property name="TransMonth_IsSync" column="TransMonth_IsSync"></property>
+		<property name="TransMonth_SyncDate" column="TransMonth_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

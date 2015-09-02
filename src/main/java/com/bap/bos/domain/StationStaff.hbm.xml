@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="StationStaff" table="tb_StationStaff">
+		<composite-id>
+			<key-property name="StationStaff_StationNo" column="StationStaff_StationNo"></key-property>
+			<key-property name="StationStaff_StaffNo" column="StationStaff_StaffNo"></key-property>
+		</composite-id>
+		<property name="StationStaff_StaffStatus" column="StationStaff_StaffStatus" type="string"></property>
+		<property name="StationStaff_IsSync" column="StationStaff_IsSync" type="string"></property>
+		<property name="StationStaff_SyncDate" column="StationStaff_SyncDate"></property>
+		
+	</class>
+
+</hibernate-mapping>

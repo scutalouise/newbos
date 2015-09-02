@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="DayTransVerify" table="tb_DayTransVerify">
+		<composite-id>
+			<key-property name="DayTransV_Time" column="DayTransV_Time"></key-property>
+			<key-property name="DayTransV_StationNo" column="DayTransV_StationNo"></key-property>
+		</composite-id>
+	
+		<property name="DayTransV_Status" column="DayTransV_Status"></property>
+		<property name="DayTransV_VerifyStaffNo" column="DayTransV_VerifyStaffNo"></property>
+		<property name="DayTransV_VerifyTime" column="DayTransV_VerifyTime"></property>
+		<property name="DayTransV_IsSync" column="DayTransV_IsSync"></property>
+		<property name="DayTransV_SyncDate" column="DayTransV_SyncDate"></property>
+		<property name="DayTransV_AutoSure" column="DayTransV_AutoSure"></property>
+	</class>
+
+</hibernate-mapping>

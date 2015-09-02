@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="NozzleSetting" table="tb_NozzleSetting">
+		<composite-id>
+			<key-property name="NozzleSetting_StationNo" column="NozzleSetting_StationNo"></key-property>
+			<key-property name="NozzleSetting_Phy_Noz" column="NozzleSetting_Phy_Noz"></key-property>
+		</composite-id>
+		<property name="NozzleSetting_node" column="NozzleSetting_node"></property>
+		<property name="NozzleSetting_FP" column="NozzleSetting_FP"></property>
+		<property name="NozzleSetting_Log_Noz" column="NozzleSetting_Log_Noz"></property>
+		<property name="NozzleSetting_TankNum" column="NozzleSetting_TankNum"></property>	
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${db.url}" />
+		<property name="user" value="${db.user}" />
+		<property name="password" value="${db.pwd}" />
+	</bean> -->
+	
+	
+	 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">  
+        <property name="driverClass" value="${jdbc.driverClassName}"/>  
+        <property name="jdbcUrl" value="${jdbc.url}"/>  
+        <property name="maxPoolSize" value="${hibernate.c3p0.maxPoolSize}"/>  
+        <property name="minPoolSize" value="${hibernate.c3p0.minPoolSize}"/>
+        <property name="initialPoolSize" value="${hibernate.c3p0.initialPoolSize}" /> 
+        <property name="maxIdleTime" value="${hibernate.c3p0.maxIdleTime}" />
+        <property name="maxStatements" value="0" />
+        <property name="maxStatementsPerConnection" value="0" />
+        <property name="idleConnectionTestPeriod" value="30" />
+		<property name="preferredTestQuery" value="select station_no from tb_station where station_no = '000001'" />
+		<property name="acquireIncrement" value="5" />
+		<property name="acquireRetryAttempts" value="50" />
+		<property name="acquireRetryDelay" value="1000" />
+		<!-- <property name="breakAfterAcquireFailure" value="true" /> -->
+		<property name="checkoutTimeout" value="20000" />
+		<property name="autoCommitOnClose" value="false" />
+		<property name="forceIgnoreUnresolvedTransactions" value="false" />
+		<property name="unreturnedConnectionTimeout" value="1000" />
+		<property name="testConnectionOnCheckin" value="true" />
+		<property name="testConnectionOnCheckout" value="false" />
+		<property name="usesTraditionalReflectiveProxies" value="false" />
+        
+        <!--c3p0是异步操作的，缓慢的JDBC操作通过帮助进程完成。扩展这些操作可以有效的提升性能
+		通过多线程实现多个操作同时被执行。-->
+        <property name="numHelperThreads" value="${hibernate.c3p0.threadCount}" />
+        <property name="properties">
+            <props>
+                <prop key="user">${jdbc.username}</prop>
+                <prop key="password">${jdbc.password}</prop>  
+            </props>
+        </property>
+    </bean>  
+    
+     <bean id="dataSourceHos" class="com.mchange.v2.c3p0.ComboPooledDataSource">  
+        <property name="driverClass" value="${jdbc.driverClassName}"/>  
+        <property name="jdbcUrl" value="${jdbc.url}"/>  
+        <property name="maxPoolSize" value="${hibernate.c3p0.maxPoolSize}"/>  
+        <property name="minPoolSize" value="${hibernate.c3p0.minPoolSize}"/>
+        <property name="initialPoolSize" value="${hibernate.c3p0.initialPoolSize}" /> 
+        <property name="maxIdleTime" value="${hibernate.c3p0.maxIdleTime}" />
+        <property name="maxStatements" value="0" />
+        <property name="maxStatementsPerConnection" value="0" />
+        <property name="idleConnectionTestPeriod" value="30" />
+		<property name="preferredTestQuery" value="select station_no from tb_station where station_no = '000001'" />
+		<property name="acquireIncrement" value="5" />
+		<property name="acquireRetryAttempts" value="50" />
+		<property name="acquireRetryDelay" value="1000" />
+		<!-- <property name="breakAfterAcquireFailure" value="true" /> -->
+		<property name="checkoutTimeout" value="20000" />
+		<property name="autoCommitOnClose" value="false" />
+		<property name="forceIgnoreUnresolvedTransactions" value="false" />
+		<property name="unreturnedConnectionTimeout" value="1000" />
+		<property name="testConnectionOnCheckin" value="true" />
+		<property name="testConnectionOnCheckout" value="false" />
+		<property name="usesTraditionalReflectiveProxies" value="false" />
+        
+        <!--c3p0是异步操作的，缓慢的JDBC操作通过帮助进程完成。扩展这些操作可以有效的提升性能
+		通过多线程实现多个操作同时被执行。-->
+        <property name="numHelperThreads" value="${hibernate.c3p0.threadCount}" />
+        <property name="properties">
+            <props>
+                <prop key="user">${jdbc.username}</prop>
+                <prop key="password">${jdbc.password}</prop>  
+            </props>
+        </property>
+    </bean>  
+    
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml" /> -->
+		<!-- <property name="namingStrategy" ref="namingStrategy" /> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<!-- <prop key="hibernate.transaction.auto_close_session">true</prop> -->
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_configuration_file_resource_path">ehcache.xml</prop>
+				<prop key="hibernate.generate_statistics">true</prop> 
+				<prop key="hibernate.cache.use_structured_entries">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop> 
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+			</props>
+		</property>
+		<property name="packagesToScan"  value="com.bap.bos.domain"/>
+		<property name="mappingLocations">
+			<list>
+				<value>
+					classpath:/com/bap/bos/**/*.hbm.xml
+				</value>
+				<value>
+					classpath:/com/bap/authority/**/*.hbm.xml
+				</value>
+				<value>
+					classpath:com/bap/bos/util/**/*.hbm.xml
+				</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="sessionFactoryHos" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceHos" />
+		<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml" /> -->
+		<!-- <property name="namingStrategy" ref="namingStrategy" /> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<!-- <prop key="hibernate.transaction.auto_close_session">true</prop> -->
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_configuration_file_resource_path">ehcache.xml</prop>
+				<prop key="hibernate.generate_statistics">true</prop> 
+				<prop key="hibernate.cache.use_structured_entries">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop> 
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+			</props>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>
+					classpath:/com/bap/hos/**/*.hbm.xml
+				</value>
+				<value>
+					classpath:/com/bap/bos/**/*.hbm.xml
+				</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="transactionManagerHos" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryHos" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManagerHos" />
+	<!-- DDL 表名列名生成策略 -->
+	<bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
+	
+</beans>

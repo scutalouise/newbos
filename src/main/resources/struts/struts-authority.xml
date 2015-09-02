@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+		"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="authority" extends="struts-default">
+		<!-- ******************登陆******************************** -->
+		<action name="Login_authority" class="loginAction" method="Login">
+			<result name="success">/authorityManage/index.jsp</result>
+			<result name="input">/authorityManage/login.jsp</result>
+		</action>
+		<!-- ******************退出******************************** -->
+		<action name="DengChu" class="loginAction" method="delSession">
+			<result name="toLogin">/authorityManage/login.jsp</result>
+		</action>
+		<!-- ******************密码修改******************************** -->
+		<action name="updatepas" class="AdminManageAction" method="updatePas">
+			<result name="success">/authorityManage/update_pas.jsp</result>
+			<result name="input">/authorityManage/update_pas.jsp</result>
+			<result name="toLogin">/authorityManage/login.jsp</result>
+		</action>
+		
+							<!-- 系统功能管理-->
+		<!-- ******************添加系统功能******************************** -->
+		<action name="addFunction" class="sysFunctionManageAction"
+			method="addFunction">
+			<result name="success">/authorityManage/addFunction.jsp</result>
+			<result name="input">/authorityManage/addFunction.jsp</result>
+		</action>
+		<!-- ******************修改系统功能******************************** -->
+		<action name="updateFunction" class="sysFunctionManageAction"
+			method="selUpdateFunction">
+			<result name="success">/authorityManage/updateFunction.jsp</result>
+			<result name="input">/authorityManage/updateFunction.jsp</result>
+		</action>
+		<!-- ******************删除系统功能******************************** -->
+		<action name="deleteFunction" class="sysFunctionManageAction"
+			method="delFunction">
+			<result name="success">/authorityManage/deleteFunction.jsp</result>
+			<result name="input">/authorityManage/deleteFunction.jsp</result>
+		</action>
+		
+							<!-- 角色-功能管理-->
+		<!-- ******************添加角色******************************** -->
+		<action name="addRole" class="sysRoleManageAction"
+			method="addRole">
+			<result name="success">/authorityManage/addRole.jsp</result>
+			<result name="input">/authorityManage/addRole.jsp</result>
+		</action>
+		<!-- ******************修改角色******************************** -->
+		<action name="updateRole" class="sysRoleManageAction"
+			method="updateRole">
+			<result name="success">/authorityManage/updateRole.jsp</result>
+			<result name="input">/authorityManage/updateRole.jsp</result>
+		</action>
+		<!-- ******************删除角色******************************** -->
+		<action name="delRole" class="sysRoleManageAction"
+			method="delRole">
+			<result name="success">/authorityManage/deleteRole.jsp</result>
+			<result name="input">/authorityManage/deleteRole.jsp</result>
+		</action>	
+				
+							<!-- 组别管理-->
+		<!-- ******************添加组别******************************** -->
+		<action name="addGroup" class="sysGroupManageAction"
+			method="addGroup">
+			<result name="success">/authorityManage/addGroup.jsp</result>
+			<result name="input">/authorityManage/addGroup.jsp</result>
+		</action>
+		<!-- ******************修改组别******************************** -->
+		<action name="updateGroup" class="sysGroupManageAction"
+			method="updateGroup">
+			<result name="success">/authorityManage/updateGroup.jsp</result>
+			<result name="input">/authorityManage/updateGroup.jsp</result>
+		</action>
+		<!-- ******************删除组别******************************** -->
+		<action name="delGroup" class="sysGroupManageAction"
+			method="delGroup">
+			<result name="success">/authorityManage/deleteGroup.jsp</result>
+			<result name="input">/authorityManage/deleteGroup.jsp</result>
+		</action>
+	</package>
+
+
+	<!-- ******************JSON数据******************************** -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="authorityJson" extends="json-default">
+	
+		<action name="selParentFunction" class="sysFunctionManageAction"
+			method="selParentFunction">
+			<result name="success" type="json">
+				<param name="root">ListFcS</param>
+			</result>
+		</action>
+		<action name="selDelFunction" class="sysFunctionManageAction"
+			method="selDelFunction">
+			<result name="success" type="json">
+				<param name="root">ListFcS</param>
+			</result>
+		</action>
+		<action name="selUpdateFunctionList" class="sysFunctionManageAction"
+			method="selUpdateFunctionList">
+			<result name="success" type="json">
+				<param name="root">ListFcS</param>
+			</result>
+		</action>
+		<action name="selUpdateFunctionDetails" class="sysFunctionManageAction"
+			method="selUpdateFunctionDetails">
+			<result name="success" type="json">
+				<param name="root">ListFcS</param>
+			</result>
+		</action>
+		<action name="selSysFunction" class="sysFunctionManageAction"
+			method="selSysFunction">
+			<result name="success" type="json">
+				<param name="root">ListFcS</param>
+			</result>
+		</action>
+		
+		<action name="selSysRole" class="sysRoleManageAction"
+			method="selSysRole">
+			<result name="success" type="json">
+				<param name="root">SysRole</param>
+			</result>
+		</action>
+		<action name="selSysRoleDetails" class="sysRoleManageAction"
+			method="selSysRoleDetails">
+			<result name="success" type="json">
+				<param name="root">SysRole</param>
+			</result>
+		</action>	
+
+		<!-- ******************组别管理******************************** -->
+		<action name="selSysGroup" class="sysGroupManageAction"
+			method="selSysGroup">
+			<result name="success" type="json">
+				<param name="root">SysGroup</param>
+			</result>
+		</action>
+		<action name="selSysGroupDetails" class="sysGroupManageAction"
+			method="selSysGroupDetails">
+			<result name="success" type="json">
+				<param name="root">SysGroup</param>
+			</result>
+		</action>
+		
+		<!-- ******************添加、查询、删除角色-功能******************************** -->
+		<action name="selRoleFunction" class="sysRoleManageAction"
+			method="selRoleFunction">
+			<result name="success" type="json">
+				<param name="root">RoleFunction</param>
+			</result>
+		</action>
+		<action name="updateRoleFunction" class="sysRoleManageAction"
+			method="updateRoleFunction">
+			<result name="success" type="json">
+				<param name="root">RoleFunction</param>
+			</result>
+		</action>
+	
+	
+	</package>
+
+</struts>

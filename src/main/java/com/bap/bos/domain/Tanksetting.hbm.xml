@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Tanksetting" table="tb_Tanksetting">
+		<composite-id>
+			<key-property name="Tanksetting_StationNo" column="Tanksetting_StationNo"></key-property>
+			<key-property name="Tanksetting_TankNum" column="Tanksetting_TankNum"></key-property>
+		</composite-id>
+		<property name="Tanksetting_TotalVolume" column="Tanksetting_TotalVolume"></property>
+		<property name="Tanksetting_ProductNum" column="Tanksetting_ProductNum"></property>
+		<property name="Tanksetting_HHAlarm" column="Tanksetting_HHAlarm"></property>
+		<property name="Tanksetting_HDAlarm" column="Tanksetting_HDAlarm"></property>	
+		<property name="Tanksetting_WHAlarm" column="Tanksetting_WHAlarm"></property>
+		<property name="Tanksetting_GasAlarm" column="Tanksetting_GasAlarm"></property>
+		<property name="Tanksetting_IsSync" column="Tanksetting_IsSync" ></property>
+		<property name="Tanksetting_SyncDate" column="Tanksetting_SyncDate"></property>
+		<property name="Tanksetting_ManualVal" column="Tanksetting_ManualVal"></property>
+	</class>
+
+</hibernate-mapping>

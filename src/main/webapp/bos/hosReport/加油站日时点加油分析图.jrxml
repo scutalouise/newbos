@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="加油站日时点加油分析图" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59870d46-195d-437b-88bf-e6e21f9a7325">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Date" class="java.lang.String"/>
+	<parameter name="YearMonth" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="StationNo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stationName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select TimeFrame_TimeFrame,sum(TransItem_PayVol) as sellVol ,(case when $P{StationNo}='-1' then '总合' else (select Station_Name from tb_Station where Station_No=$P{StationNo}) end) as stationName
+from tb_TransItem,tb_timeframe where TransItem_ShiftDate=$P{Date} and date_format(TransItem_TransDate,'%H:%i:%s') between TimeFrame_StartDate and TimeFrame_EndDate and case when $P{StationNo}='-1' then 1=1 else TransItem_StationNo=$P{StationNo} end group by TimeFrame_TimeFrame]]>
+	</queryString>
+	<field name="TimeFrame_TimeFrame" class="java.lang.String">
+		<fieldDescription><![CDATA[时段（00；01；02…23）]]></fieldDescription>
+	</field>
+	<field name="sellVol" class="java.math.BigDecimal"/>
+	<field name="stationName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="33" uuid="dbcf94be-480d-40a2-848d-16d064e08001"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stationName}+"日时点加油分析图"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="33" width="802" height="33" uuid="4733afab-6f5f-4711-a3e8-db858aa83cd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA["日期"+$P{Date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="450" splitType="Stretch">
+			<lineChart>
+				<chart>
+					<reportElement x="0" y="0" width="802" height="450" uuid="36bc3b90-ce1d-4f6c-be47-8fabb5eb901d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA['销量']]></seriesExpression>
+						<categoryExpression><![CDATA[$F{TimeFrame_TimeFrame}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{sellVol}]]></valueExpression>
+						<itemHyperlink hyperlinkType="Reference" hyperlinkTarget="Blank">
+							<hyperlinkReferenceExpression><![CDATA["bosGraph/SellAnalyzeGraph.action?startDate="+$P{Date}]]></hyperlinkReferenceExpression>
+						</itemHyperlink>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisLabelExpression><![CDATA["时间段（H）"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font fontName="宋体" size="12" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["销售量（L）"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font fontName="宋体" size="12" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+							</labelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

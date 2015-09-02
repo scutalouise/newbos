@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+		"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="bosReport" extends="struts-default,jasperreports-default,jfreechart-default">
+		<!--班报表  -->	
+		<action name="reportShift" class="reportManageAction" method="reportShift">
+			<result name="success" type="jasper">
+				<param name="documentName">银晖油料交通加油站销售班报</param>
+				<param name="location">bos/Report/银晖油料交通加油站销售班报.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		<action name="reportShiftXls" class="reportManageAction" method="reportShift">
+			<result name="success" type="jasper">
+				<param name="documentName">reportShift</param>
+				<param name="location">bos/Report/银晖油料交通加油站销售班报.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+		</action>
+		<!--销售日报表  -->	
+		<action name="DaySellVolReport" class="reportManageAction" method="DaySellVolReport">
+			<result name="Vol" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站销售日报（油品分类升数汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="Money" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站销售日报（油品分类金额汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="MoneyVol" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站销售日报（油品分类金额升数汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		
+		<action name="DaySellVolReportXls" class="reportManageAction" method="DaySellVolReport">
+			<result name="Vol" type="jasper">
+				<param name="documentName">DaySellVolReport</param>
+				<param name="location">bos/Report/银晖油料交通加油站销售日报（油品分类升数汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="Money" type="jasper">
+			<param name="documentName">DaySellVolReport</param>
+				<param name="location">bos/Report/银晖油料交通加油站销售日报（油品分类金额汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="MoneyVol" type="jasper">
+			<param name="documentName">DaySellVolReport</param>
+				<param name="location">bos/Report/银晖油料交通加油站销售日报（油品分类金额升数汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<!--月盘点/结算报表  -->	
+		<action name="MonthReport" class="reportManageAction" method="MonthReport">
+			<result name="pandian" type="jasper">			
+				<param name="location">bos/Report/银晖油料交通加油站加油站月盘点表（分油品）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="pandian1" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站加油站月盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="jiesuan" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站加油站月结算表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<action name="MonthReportXls" class="reportManageAction" method="MonthReport">
+			<result name="pandian" type="jasper">
+				<param name="documentName">MonthReport</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油站月盘点表（分油品）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="pandian1" type="jasper">
+				<param name="documentName">MonthReport</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油站月盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="jiesuan" type="jasper">
+				<param name="documentName">MonthReport</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油站月结算表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<!--加油机统计报表  -->	
+		<action name="NozzleReport" class="reportManageAction" method="NozzleReport">
+			<result name="success" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站加油机加油统计表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		<action name="NozzleReportXls" class="reportManageAction" method="NozzleReport">
+			<result name="success" type="jasper">
+				<param name="documentName">NozzleReport</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油机加油统计表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+		</action>
+		<!--交易明细报表  -->	
+		<action name="TransDetailsReport" class="reportManageAction" method="TransDetailsReport">
+			<result name="TransDetails" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站加油明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="BuLuTrans" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站补录交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="HuiGuanTrans" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站回罐交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="ZiYongKaTrans" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站公司自用卡交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="KeHuiKaTrans" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站客户卡交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="YouHuiKaTrans" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站优惠卡交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="XianJinTrans" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站现金交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		
+		<action name="TransDetailsReportXls" class="reportManageAction" method="TransDetailsReport">
+			<result name="TransDetails" type="jasper">
+			    <param name="documentName">TransDetailsReportXls</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="BuLuTrans" type="jasper">
+				<param name="documentName">BuLuTrans</param>
+				<param name="location">bos/Report/银晖油料交通加油站补录交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="HuiGuanTrans" type="jasper">
+				<param name="documentName">HuiGuanTrans</param>
+				<param name="location">bos/Report/银晖油料交通加油站回罐交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="ZiYongKaTrans" type="jasper">
+				<param name="documentName">ZiYongKaTrans</param>
+				<param name="location">bos/Report/银晖油料交通加油站公司自用卡交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="KeHuiKaTrans" type="jasper">
+				<param name="documentName">KeHuiKaTrans</param>
+				<param name="location">bos/Report/银晖油料交通加油站客户卡交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="YouHuiKaTrans" type="jasper">
+				<param name="documentName">YouHuiKaTrans</param>
+				<param name="location">bos/Report/银晖油料交通加油站优惠卡交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="XianJinTrans" type="jasper">
+				<param name="documentName">XianJinTrans</param>
+				<param name="location">bos/Report/银晖油料交通加油站现金交易明细表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+		</action>
+		<!--银行存款报表  -->	
+		<action name="BankDepositReport" class="reportManageAction" method="BankDepositReport">
+			<result name="success" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站银行存款记录.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		<action name="BankDepositReportXls" class="reportManageAction" method="BankDepositReport">
+			<result name="success" type="jasper">
+				<param name="documentName">BankDepositReportXls</param>
+				<param name="location">bos/Report/银晖油料交通加油站银行存款记录.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+		</action>
+		<!--月销售计划完成统计报表  -->	
+		<action name="MonthSellPlanReport" class="reportManageAction" method="MonthSellPlanReport">
+			<result name="success" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站月销售计划完成统计表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		<action name="MonthSellPlanReportXls" class="reportManageAction" method="MonthSellPlanReport">
+			<result name="success" type="jasper">
+				<param name="documentName">MonthSellPlanReportXls</param>
+				<param name="location">bos/Report/银晖油料交通加油站月销售计划完成统计表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+		</action>
+		<!--运耗报表  -->	
+		<action name="lossrateReport" class="purchaseManage" method="lossrateReport">
+			<result name="success" type="jasper">
+				<param name="location">bos/Report/运耗统计.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		<!--收油记录报表  -->	
+		<action name="receiveOilReport" class="purchaseManage" method="receiveOilReport">
+			<result name="shouyou" type="jasper">
+				<param name="location">bos/Report/收油记录(改进).jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="xieyou" type="jasper">
+				<param name="location">bos/Report/卸油数据报表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		<!--同期报表  -->	
+		<action name="yearOnYearShift" class="reportManageAction" method="yearOnYearShift">
+			<result name="success" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站加油站销售统计表(与去年同期比).jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		<action name="yearOnYearShiftXls" class="reportManageAction" method="yearOnYearShift">
+			<result name="success" type="jasper">
+				<param name="documentName">yearOnYearShiftXls</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油站销售统计表(与去年同期比).jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+		</action>
+		<!--盘点报表  -->	
+		<action name="StocktakingReport" class="reportManageAction" method="StocktakingReport">
+			<result name="Stocktaking" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站加油站盘点表（分油品）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="Stocktaking1" type="jasper">
+				<param name="location">bos/Report/银晖油料交通加油站加油站时段盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="celiangTank" type="jasper">
+				<param name="location">bos/Report/罐储油料测量记录报表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+		</action>
+		
+		<action name="StocktakingReportXls" class="reportManageAction" method="StocktakingReport">
+			<result name="Stocktaking" type="jasper">
+				<param name="documentName">StocktakingReportXls</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油站盘点表（分油品）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="Stocktaking1" type="jasper">
+				<param name="documentName">Stocktaking1</param>
+				<param name="location">bos/Report/银晖油料交通加油站加油站时段盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="celiangTank" type="jasper">
+				<param name="documentName">celiangTank</param>
+				<param name="location">bos/Report/罐储油料测量记录报表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+		</action>			
+	</package>
+	
+	<package name="bosGraph" extends="struts-default">
+		<!--销售图表  -->	
+		<action name="SellAnalyzeGraph" class="analyzeGraphManageAction" method="SellAnalyzeGraph">
+			<result name="DayTime" type="redirect">/bos/Report/JYZRSDFXT.PDF</result>
+			<result name="DayStructure" type="redirect">/bos/Report/JYZRFYJGFXT.PDF</result>
+			<result name="DayTransType" type="redirect">/bos/Report/JYZRXLJYLXFXT.PDF</result>
+			<result name="MonthSell" type="redirect">/bos/Report/JYZYYPXLFXT.PDF</result>
+			<result name="YearSellCompare" type="redirect">/bos/Report/JYZYXSDBFXT.PDF</result>
+		</action>
+	</package>
+	
+</struts>

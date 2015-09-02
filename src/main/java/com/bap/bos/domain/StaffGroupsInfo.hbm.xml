@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="StaffGroupsInfo" table="tb_StaffGroupsInfo">
+	<composite-id>
+		<key-property name="StaffGroupInfo_ShiftNo" column="StaffGroupInfo_ShiftNo" type="string"></key-property>
+		<key-property name="StaffGroupInfo_StaffNo" column="StaffGroupInfo_StaffNo" type="string"></key-property>
+	</composite-id>
+		<property name="StaffGroupInfo_StationNo" column="StaffGroupInfo_StationNo" type="string"></property>
+		<property name="StaffGroupInfo_StartWorkTime" column="StaffGroupInfo_StartWorkTime"></property>
+		<property name="StaffGroupInfo_OffWorkTime" column="StaffGroupInfo_OffWorkTime"></property>
+		<property name="StaffGroupInfo_IsSync" column="StaffGroupInfo_IsSync" type="string"></property>
+		<property name="StaffGroupInfo_SyncDate" column="StaffGroupInfo_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

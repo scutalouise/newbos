@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="SellingTarget" table="tb_SellingTarget">
+		<composite-id>
+			<key-property name="SellingTarget_StationNo" column="SellingTarget_StationNo"></key-property>
+			<key-property name="SellingTarget_TheMonth" column="SellingTarget_TheMonth"></key-property>
+			<key-property name="SellingTarget_ProductNum" column="SellingTarget_ProductNum"></key-property>
+		</composite-id>
+		<property name="SellingTarget_PlanQTY" column="SellingTarget_PlanQTY"></property>
+		<property name="SellingTarget_IsSync" column="SellingTarget_IsSync"></property>
+		<property name="SellingTarget_SyncDate" column="SellingTarget_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

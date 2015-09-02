@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+		"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<package name="hosReport" extends="struts-default,jasperreports-default,jfreechart-default">
+		<!--销售日报表  -->	
+		<action name="hosDaySellVolReport" class="hosReportManageAction" method="DaySellVolReport">
+			<result name="MoneyVol" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站销售日报（油品分类金额升数汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<action name="hosDaySellVolReportXls" class="hosReportManageAction" method="DaySellVolReport">
+			<result name="MoneyVol" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站销售日报（油品分类金额升数汇总）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<!--月盘点/库存报表  -->	
+		<action name="hosMonthReport" class="hosReportManageAction" method="MonthReport">
+			<result name="jiesuan" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站加油站月结算表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="pandian1" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站加油站月盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<action name="hosMonthReportXls" class="hosReportManageAction" method="MonthReport">
+			<result name="jiesuan" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站加油站月结算表.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="pandian1" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站加油站月盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<!--销售时段库存盘点报表  -->	
+		<action name="hosStocktakingReport" class="hosReportManageAction" method="StocktakingReport">
+			<result name="Stocktaking1" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站加油站时段盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<action name="hosStocktakingReportXls" class="hosReportManageAction" method="StocktakingReport">
+			<result name="Stocktaking1" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站加油站时段盘点表（分油品细化交易类型）.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<!--银行存款报表  -->	
+		<action name="hosBankDepositReport" class="hosReportManageAction" method="BankDepositReport">
+			<result name="success" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站银行存款记录.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">PDF</param>
+			</result>
+			<result name="input"></result>
+		</action>
+		<action name="hosBankDepositReportXls" class="hosReportManageAction" method="BankDepositReport">
+			<result name="success" type="jasper">
+				<param name="location">bos/hosReport/银晖油料交通加油站银行存款记录.jasper</param>
+				<param name="connection ">con</param>
+				<param name="reportParameters">Parameter</param>
+				<param name="format">XLS</param>
+			</result>
+			<result name="input"></result>
+		</action>
+	</package>
+	
+	<package name="hosGraph" extends="struts-default">
+		<!--销售图表  -->	
+		<action name="hosSellAnalyzeGraph" class="hosAnalyzeGraphManageAction" method="SellAnalyzeGraph">
+			<result name="DayTime" type="redirect">/bos/hosReport/JYZRSDFXT.PDF</result>
+			<result name="DayStructure" type="redirect">/bos/hosReport/JYZRFYJGFXT.PDF</result>
+			<result name="DayTransType" type="redirect">/bos/hosReport/JYZRXLJYLXFXT.PDF</result>
+			<result name="MonthSell" type="redirect">/bos/hosReport/JYZYYPXLFXT.PDF</result>
+			<result name="YearSellCompare" type="redirect">/bos/hosReport/JYZYXSDBFXT.PDF</result>
+		</action>
+	</package>
+	
+	<!-- ******************JSON数据******************************** -->
+	<package name="hosJson" extends="json-default">
+		<action name="selStation" class="hosReportManageAction" method="selStation">
+			<result name="success" type="json">
+				<param name="root">stations</param>
+			</result>
+		</action>
+	</package>
+</struts>

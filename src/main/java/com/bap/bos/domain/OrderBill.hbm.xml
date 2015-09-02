@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="OrderBill" table="tb_OrderBill">
+		<id name="OrderBill_Num" column="OrderBill_Num" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="OrderBill_NumAliases" column="OrderBill_NumAliases"></property>
+		<property name="OrderBill_StationNo" column="OrderBill_StationNo"></property>
+		<property name="OrderBill_TankNum" column="OrderBill_TankNum"></property>
+		<property name="OrderBill_ProductType" column="OrderBill_ProductType"></property>
+		<property name="OrderBill_ProductNum" column="OrderBill_ProductNum"></property>
+		<property name="OrderBill_Unit" column="OrderBill_Unit"></property>
+		<property name="OrderBill_AddVolumeM" column="OrderBill_AddVolumeM"></property>
+		<property name="OrderBill_AddVolumeL" column="OrderBill_AddVolumeL"></property>
+		<property name="OrderBill_AddWeight" column="OrderBill_AddWeight"></property>
+		<property name="OrderBill_SupplierNum" column="OrderBill_SupplierNum"></property>
+		<property name="OrderBill_Status" column="OrderBill_Status"></property>
+		<property name="OrderBill_ActVolumeM" column="OrderBill_ActVolumeM"></property>
+		<property name="OrderBill_ActVolumeL" column="OrderBill_ActVolumeL"></property>
+		<property name="OrderBill_ActWeight" column="OrderBill_ActWeight"></property>	
+		<property name="OrderBill_CostPrice" column="OrderBill_CostPrice"></property>
+		<property name="OrderBill_CreateDate" column="OrderBill_CreateDate"></property>
+		<property name="OrderBill_AckDate" column="OrderBill_AckDate"></property>
+		<property name="OrderBill_ActOrderDate" column="OrderBill_ActOrderDate"></property>
+		<property name="OrderBill_ExpectDate" column="OrderBill_ExpectDate"></property>
+		<property name="OrderBill_RealityDate" column="OrderBill_RealityDate"></property>
+		<property name="OrderBill_ActPlanDate" column="OrderBill_ActPlanDate"></property>
+		<property name="OrderBill_CreateStaffNo" column="OrderBill_CreateStaffNo"></property>
+		<property name="OrderBill_AckStaffNo" column="OrderBill_AckStaffNo"></property>
+		<property name="OrderBill_ActOrderStaffNo" column="OrderBill_ActOrderStaffNo"></property>
+		<property name="OrderBill_SignoffStaffNo" column="OrderBill_SignoffStaffNo"></property>
+		<property name="recordManual" column="OrderBill_recManual"></property>
+		<property name="isRemedy" column="OrderBill_isRemedy"></property>
+		
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.authority.domain">
+	<class name="Function" table="tb_Function">
+		<id name="Function_FunctionNo" column="Function_FunctionNo" type="integer">
+			<generator class="identity"></generator>
+		</id>
+		<property name="Function_FunctionName" column="Function_FunctionName" type="string"></property>
+		<property name="Function_FunctionState" column="Function_FunctionState" type="string"></property>
+		<property name="Function_Type" column="Function_Type" type="string"></property>
+		<property name="Function_ParentNo" column="Function_ParentNo" type="integer"></property>
+		<property name="Function_SubNo" column="Function_SubNo" type="integer"></property>
+		<property name="Function_URL" column="Function_URL" type="string"></property>
+		<property name="Function_CreateDate" column="Function_CreateDate"></property>
+		<property name="Function_SystemFlag" column="Function_SystemFlag" type="string"></property>
+		<property name="Function_IsSync" column="Function_IsSync" type="string"></property>
+		<property name="Function_SyncDate" column="Function_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,1402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SellDetail" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c178400-0910-4976-828a-ed2513a8b41b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SelDate" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[20141004]]></defaultValueExpression>
+	</parameter>
+	<parameter name="YearMonth" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[201410]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[20141005]]></defaultValueExpression>
+	</parameter>
+	<parameter name="StationNo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stationName" class="java.lang.String"/>
+	<parameter name="StartTime" class="java.lang.String"/>
+	<parameter name="EndTime" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select Product_Name,MoneyPay,MoneyVol,
+CustomerCardPre_PayAmount,CustomerCardPre_DiscountAmt,CustomerCardPre_PaidinAmount,CustomerCardPre_Vol,
+CustomerCardCharge_PayAmount,CustomerCardCharge_DiscountAmt,CustomerCardCharge_PaidinAmount,CustomerCardCharge_Vol,
+Preferential_PayAmount,Preferential_DiscountAmt,Preferential_PaidinAmount,Preferential_Vol,
+RechargeMoney,RechargeVol,
+Government_PaidinAmount,Government_Vol,
+Oneself_PaidinAmount,Oneself_Vol,Bank_PaidinAmount,Bank_Vol,HeXinTong_PaidinAmount, HeXinTong_Vol,other_PaidinAmount,other_Vol,
+(case when $P{StationNo}='-1' then '总合' else (select Station_Name from tb_Station where Station_No=$P{StationNo}) end) as stationName
+from tb_Product
+left join (select sum(TransItem_PayMoney) as MoneyPay,sum(TransItem_PayVol) as MoneyVol,TransItem_ItemCode from tb_TransItem where  TransItem_TransDate between $P{StartTime} and $P{EndTime} and TransItem_Tend='01' and case when $P{StationNo}='-1' then 1=1 else TransItem_StationNo=$P{StationNo} end group by TransItem_ItemCode)AAA
+on AAA.TransItem_ItemCode=Product_Num
+left join (select sum(TransCard_PayAmount) as CustomerCardPre_PayAmount,sum(TransCard_DiscountAmt) as CustomerCardPre_DiscountAmt,sum(TransCard_PaidinAmount) as CustomerCardPre_PaidinAmount,sum(TransCard_PayVol) as CustomerCardPre_Vol,TransCard_ItemCode from tb_TransCard
+where TransCard_TxCreateTime  between $P{StartTime} and $P{EndTime} and (TransCard_TransType='02' or TransCard_TransType='11') and case when $P{StationNo}='-1' then 1=1 else TransCard_StatinNo=$P{StationNo} end group by TransCard_ItemCode)BBB
+on BBB.TransCard_ItemCode=Product_Num
+left join (select sum(TransCard_PayAmount) as CustomerCardCharge_PayAmount,sum(TransCard_DiscountAmt) as CustomerCardCharge_DiscountAmt,sum(TransCard_PaidinAmount) as CustomerCardCharge_PaidinAmount,sum(TransCard_PayVol) as CustomerCardCharge_Vol,TransCard_ItemCode from tb_TransCard
+where TransCard_TxCreateTime  between $P{StartTime} and $P{EndTime} and (TransCard_TransType='05' or TransCard_TransType='10') and case when $P{StationNo}='-1' then 1=1 else TransCard_StatinNo=$P{StationNo} end group by TransCard_ItemCode)CCC
+on CCC.TransCard_ItemCode=Product_Num
+left join (select sum(TransCard_PayAmount) as Preferential_PayAmount,sum(TransCard_DiscountAmt) as Preferential_DiscountAmt,sum(TransCard_PaidinAmount) as Preferential_PaidinAmount,sum(TransCard_PayVol) as Preferential_Vol,TransCard_ItemCode from tb_TransCard
+where TransCard_TxCreateTime  between $P{StartTime} and $P{EndTime} and TransCard_TransType='06' and case when $P{StationNo}='-1' then 1=1 else TransCard_StatinNo=$P{StationNo} end group by TransCard_ItemCode)DDD
+on DDD.TransCard_ItemCode=Product_Num
+left join (select sum(TransItem_PayMoney) as RechargeMoney,sum(TransItem_PayVol) as RechargeVol,TransItem_ItemCode from tb_TransItem where TransItem_TransDate between $P{StartTime} and $P{EndTime} and (TransItem_Tend='08' or TransItem_Tend='09') and case when $P{StationNo}='-1' then 1=1 else TransItem_StationNo=$P{StationNo} end  group by TransItem_ItemCode)EEE
+on EEE.TransItem_ItemCode=Product_Num
+left join (select sum(TransItem_PayMoney) as Government_PaidinAmount,sum(TransItem_PayVol) as Government_Vol,TransItem_ItemCode from tb_TransItem where TransItem_TransDate between $P{StartTime} and $P{EndTime}  and TransItem_Tend='12'  and case when $P{StationNo}='-1' then 1=1 else TransItem_StationNo=$P{StationNo} end group by TransItem_ItemCode)FFF
+on FFF.TransItem_ItemCode=Product_Num
+left join (select sum(TransCard_PaidinAmount) as Oneself_PaidinAmount,sum(TransCard_PayVol) as Oneself_Vol,TransCard_ItemCode from tb_TransCard where TransCard_TxCreateTime  between $P{StartTime} and $P{EndTime}  and TransCard_TransType='07'  and case when $P{StationNo}='-1' then 1=1 else TransCard_StatinNo=$P{StationNo} end  group by TransCard_ItemCode)GGG
+on GGG.TransCard_ItemCode=Product_Num
+left join (select sum(TransItem_PayMoney) as Bank_PaidinAmount,sum(TransItem_PayVol) as Bank_Vol,TransItem_ItemCode from tb_TransItem where TransItem_TransDate between $P{StartTime} and $P{EndTime}  and TransItem_Tend='03' and case when $P{StationNo}='-1' then 1=1 else TransItem_StationNo=$P{StationNo} end group by TransItem_ItemCode)HHH
+on HHH.TransItem_ItemCode=Product_Num
+left join (select sum(TransItem_PayMoney) as HeXinTong_PaidinAmount,sum(TransItem_PayVol) as HeXinTong_Vol,TransItem_ItemCode from tb_TransItem where TransItem_TransDate between $P{StartTime} and $P{EndTime}  and TransItem_Tend='13' and case when $P{StationNo}='-1' then 1=1 else TransItem_StationNo=$P{StationNo} end group by TransItem_ItemCode)III
+on III.TransItem_ItemCode=Product_Num
+left join (select sum(TransItem_PayMoney) as other_PaidinAmount,sum(TransItem_PayVol) as other_Vol,TransItem_ItemCode from tb_TransItem where TransItem_TransDate between $P{StartTime} and $P{EndTime}  and (TransItem_Tend>12 or TransItem_Tend=04 or TransItem_Tend=03) and case when $P{StationNo}='-1' then 1=1 else TransItem_StationNo=$P{StationNo} end group by TransItem_ItemCode)JJJ
+on JJJ.TransItem_ItemCode=Product_Num]]>
+	</queryString>
+	<field name="Product_Name" class="java.lang.String">
+		<fieldDescription><![CDATA[产品名称]]></fieldDescription>
+	</field>
+	<field name="MoneyPay" class="java.math.BigDecimal"/>
+	<field name="MoneyVol" class="java.math.BigDecimal"/>
+	<field name="CustomerCardPre_PayAmount" class="java.math.BigDecimal"/>
+	<field name="CustomerCardPre_DiscountAmt" class="java.math.BigDecimal"/>
+	<field name="CustomerCardPre_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="CustomerCardPre_Vol" class="java.math.BigDecimal"/>
+	<field name="CustomerCardCharge_PayAmount" class="java.math.BigDecimal"/>
+	<field name="CustomerCardCharge_DiscountAmt" class="java.math.BigDecimal"/>
+	<field name="CustomerCardCharge_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="CustomerCardCharge_Vol" class="java.math.BigDecimal"/>
+	<field name="Preferential_PayAmount" class="java.math.BigDecimal"/>
+	<field name="Preferential_DiscountAmt" class="java.math.BigDecimal"/>
+	<field name="Preferential_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="Preferential_Vol" class="java.math.BigDecimal"/>
+	<field name="RechargeMoney" class="java.math.BigDecimal"/>
+	<field name="RechargeVol" class="java.math.BigDecimal"/>
+	<field name="Government_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="Government_Vol" class="java.math.BigDecimal"/>
+	<field name="Oneself_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="Oneself_Vol" class="java.math.BigDecimal"/>
+	<field name="Bank_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="Bank_Vol" class="java.math.BigDecimal"/>
+	<field name="HeXinTong_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="HeXinTong_Vol" class="java.math.BigDecimal"/>
+	<field name="other_PaidinAmount" class="java.math.BigDecimal"/>
+	<field name="other_Vol" class="java.math.BigDecimal"/>
+	<field name="stationName" class="java.lang.String"/>
+	<variable name="ProductTypeMoney" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{MoneyPay}==null?0:$F{MoneyPay})+
+($F{CustomerCardPre_PaidinAmount}==null?0:$F{CustomerCardPre_PaidinAmount})+
+($F{CustomerCardCharge_PaidinAmount}==null?0:$F{CustomerCardCharge_PaidinAmount})+
+($F{Preferential_PaidinAmount}==null?0:$F{Preferential_PaidinAmount})+
+($F{RechargeMoney}==null?0:$F{RechargeMoney})+
+($F{Government_PaidinAmount}==null?0:$F{Government_PaidinAmount})+
+($F{Oneself_PaidinAmount}==null?0:$F{Oneself_PaidinAmount})]]></variableExpression>
+	</variable>
+	<variable name="MoneyPay" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{MoneyPay}==null?0:$F{MoneyPay}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardPre_PayAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardPre_PayAmount}==null?0:$F{CustomerCardPre_PayAmount}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardPre_DiscountAmt" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardPre_DiscountAmt}==null?0:$F{CustomerCardPre_DiscountAmt}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardPre_PaidinAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardPre_PaidinAmount}==null?0:$F{CustomerCardPre_PaidinAmount}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardCharge_PayAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardCharge_PayAmount}==null?0:$F{CustomerCardCharge_PayAmount}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardCharge_DiscountAmt" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardCharge_DiscountAmt}==null?0:$F{CustomerCardCharge_DiscountAmt}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardCharge_PaidinAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardCharge_PaidinAmount}==null?0:$F{CustomerCardCharge_PaidinAmount}]]></variableExpression>
+	</variable>
+	<variable name="Preferential_PayAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Preferential_PayAmount}==null?0:$F{Preferential_PayAmount}]]></variableExpression>
+	</variable>
+	<variable name="Preferential_DiscountAmt" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Preferential_DiscountAmt}==null?0:$F{Preferential_DiscountAmt}]]></variableExpression>
+	</variable>
+	<variable name="Preferential_PaidinAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Preferential_PaidinAmount}==null?0:$F{Preferential_PaidinAmount}]]></variableExpression>
+	</variable>
+	<variable name="Government_PaidinAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Government_PaidinAmount}==null?0:$F{Government_PaidinAmount}]]></variableExpression>
+	</variable>
+	<variable name="Oneself_PaidinAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Oneself_PaidinAmount}==null?0:$F{Oneself_PaidinAmount}]]></variableExpression>
+	</variable>
+	<variable name="RechargeMoney" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{RechargeMoney}==null?0:$F{RechargeMoney}]]></variableExpression>
+	</variable>
+	<variable name="ProductTypeTotalMoney" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{ProductTypeMoney}]]></variableExpression>
+	</variable>
+	<variable name="ProductTypeVol" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{MoneyVol}==null?0:$F{MoneyVol})+
+($F{CustomerCardPre_Vol}==null?0:$F{CustomerCardPre_Vol})+
+($F{CustomerCardCharge_Vol}==null?0:$F{CustomerCardCharge_Vol})+
+($F{Preferential_Vol}==null?0:$F{Preferential_Vol})+
+($F{RechargeVol}==null?0:$F{RechargeVol})+
+($F{Government_Vol}==null?0:$F{Government_Vol})+
+($F{Oneself_Vol}==null?0:$F{Oneself_Vol})]]></variableExpression>
+	</variable>
+	<variable name="MoneyVol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{MoneyVol}==null?0:$F{MoneyVol}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardPre_Vol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardPre_Vol}==null?0:$F{CustomerCardPre_Vol}]]></variableExpression>
+	</variable>
+	<variable name="CustomerCardCharge_Vol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CustomerCardCharge_Vol}==null?0:$F{CustomerCardCharge_Vol}]]></variableExpression>
+	</variable>
+	<variable name="Preferential_Vol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Preferential_Vol}==null?0:$F{Preferential_Vol}]]></variableExpression>
+	</variable>
+	<variable name="Government_Vol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Government_Vol}==null?0:$F{Government_Vol}]]></variableExpression>
+	</variable>
+	<variable name="Oneself_Vol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Oneself_Vol}==null?0:$F{Oneself_Vol}]]></variableExpression>
+	</variable>
+	<variable name="RechargeVol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{RechargeVol}==null?0:$F{RechargeVol}]]></variableExpression>
+	</variable>
+	<variable name="ProductTypeTotalVol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{ProductTypeVol}]]></variableExpression>
+	</variable>
+	<variable name="yingshouMoney" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{Preferential_PaidinAmount}+$V{MoneyPay}]]></variableExpression>
+	</variable>
+	<variable name="BankVol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Bank_Vol}==null?0:$F{Bank_Vol}]]></variableExpression>
+	</variable>
+	<variable name="BankMoney" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Bank_PaidinAmount}==null?0:$F{Bank_PaidinAmount}]]></variableExpression>
+	</variable>
+	<variable name="HeXinTongVol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{HeXinTong_Vol}==null?0:$F{HeXinTong_Vol}]]></variableExpression>
+	</variable>
+	<variable name="HeXinTongMoney" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{HeXinTong_PaidinAmount}==null?0:$F{HeXinTong_PaidinAmount}]]></variableExpression>
+	</variable>
+	<variable name="otherVol" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{other_Vol}==null?0:$F{other_Vol}]]></variableExpression>
+	</variable>
+	<variable name="otherMoney" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{other_PaidinAmount}==null?0:$F{other_PaidinAmount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="634" y="40" width="55" height="20" uuid="1e04a269-7ccb-49c7-93c0-a7c72e6a6000"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="1" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[列印时间：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="10" width="371" height="19" uuid="3302fd79-59b0-4328-8e81-18e42992d969"/>
+				<textElement textAlignment="Center">
+					<font fontName="宋体" size="14" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[加油站销售日报（油品分类金额升数汇总）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="360" y="37" width="37" height="20" uuid="413f3a8e-ebd6-446c-9865-13194c9a63f2"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="1" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[日期：]]></text>
+			</staticText>
+			<textField pattern="yyyy/MM/dd HH:mm:ss">
+				<reportElement isPrintRepeatedValues="false" x="689" y="40" width="94" height="20" uuid="ca872248-a8cb-41d8-8c3a-c21414921ede"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="37" width="119" height="20" uuid="d4aa35c1-593b-44fe-96b7-3cf1e629e45c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SelDate}+"-"+$P{endDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="37" width="32" height="20" uuid="5c3a95e8-93d7-43d8-9588-30113be6a336"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[站点：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="38" y="37" width="99" height="20" uuid="2b82bbff-d725-4b6b-82cc-45dcbf43785a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stationName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="38" height="45" uuid="bf3e46c1-a83d-4126-ae62-5e960ded63cf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[油品类型]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="1" width="132" height="16" uuid="f35bf710-80f7-4ae8-9854-3c2f73cbf8d7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[自用卡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="17" width="66" height="16" uuid="514ff0e2-3e00-4017-8304-c96e6212cce3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[公司自用]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="17" width="66" height="16" uuid="64dc0ac6-b29e-4448-b6d3-96a0b7aeacf4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[加油站回灌]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="33" width="42" height="13" uuid="34580609-6b7a-42ea-8f18-6952b6967b3b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[实收金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="17" width="83" height="16" uuid="c238bdd0-7b3e-41c2-8b99-9003fb676da7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[赊销]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="1" width="173" height="16" uuid="bf775e6d-0dba-4f8c-9d39-0985dddec56b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[客户卡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="17" width="90" height="16" uuid="88ba6653-cc2a-4f74-8317-2062fb276ddc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[预存]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="33" width="50" height="13" uuid="2d516e31-fde7-4444-943c-84c1a35b5340"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[实收金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="1" width="110" height="32" uuid="0dd8e4e7-8ba1-4c15-b8c6-f30cf4fed8f7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[优惠卡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="1" width="102" height="32" uuid="16745938-19ea-4f0a-a86e-6ea574d47272"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[政府卡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="555" y="1" width="94" height="32" uuid="a5c40845-aa77-4344-899b-d96a8b357884"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[现金]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="649" y="1" width="153" height="32" uuid="a7ae0f56-fb54-4e37-8d31-6b29e0e8d262"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[合计]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="33" width="56" height="13" uuid="61fad26f-0ac4-49d8-af91-62669afb616c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[实收金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="33" width="57" height="13" uuid="bc829941-20b8-4402-9a5d-82cdd3cf9259"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="33" width="41" height="13" uuid="e3ae721f-a8f5-426d-b586-ca15375154d5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="33" width="40" height="13" uuid="d5fc591d-893f-4aad-bba7-8e269a260f99"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="33" width="33" height="13" uuid="9ea63a04-ef3e-42da-bc21-1fe0c4b1e658"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="33" width="33" height="13" uuid="2f26abad-f721-4884-89af-f24090ba54b5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="33" width="54" height="13" uuid="9626cb3f-e132-4f7f-8768-92e325ae6423"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="33" width="45" height="13" uuid="de5ba31f-0383-4cf9-84ad-9599bd292798"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="555" y="33" width="42" height="13" uuid="44457b55-40ad-48bc-a603-c87d2ce20f4d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="649" y="33" width="65" height="13" uuid="5b0cffe1-0cae-4f9d-93b1-fdbb8b330d13"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="33" width="33" height="13" uuid="e299100a-cffc-4ced-9db8-cad4c0f51ae1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="33" width="33" height="13" uuid="daa59234-4542-412b-9402-03642bd925b0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="597" y="33" width="52" height="13" uuid="bd60525c-f7ab-4f39-8c1a-a8a75f951333"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="714" y="33" width="88" height="13" uuid="b5326864-bbe8-4d27-ac17-7fe4dade7949"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[金额]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="38" height="20" uuid="64dbb671-4ee2-49c6-8a68-30497bac894d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Product_Name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="211" y="0" width="42" height="20" uuid="420a96b2-ce62-4b83-8727-b1e339f8fffd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CustomerCardCharge_PaidinAmount}==null?0:$F{CustomerCardCharge_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="293" y="0" width="50" height="20" uuid="af4550e4-3080-442d-8d52-52cd0ad7bf20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CustomerCardPre_PaidinAmount}==null?0:$F{CustomerCardPre_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="397" y="0" width="56" height="20" uuid="981de213-f243-43df-b2fc-dd041621e8d9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Preferential_PaidinAmount}==null?0:$F{Preferential_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="38" y="0" width="33" height="20" uuid="fec86965-f158-4619-9167-a5c99f336d68"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Oneself_Vol}==null?0:$F{Oneself_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="104" y="0" width="33" height="20" uuid="a2d4ee9f-2f80-4911-b004-58281d7dcb7a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RechargeVol}==null?0:$F{RechargeVol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="170" y="0" width="41" height="20" uuid="3c455b15-d50c-4d59-95a6-3b55bb49892e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CustomerCardCharge_Vol}==null?0:$F{CustomerCardCharge_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="343" y="0" width="54" height="20" uuid="8aa9837b-3c68-4064-87ce-1e1fac7c12b5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Preferential_Vol}==null?0:$F{Preferential_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="555" y="0" width="42" height="20" uuid="81ed26a7-ba1b-4076-b49d-03672c99f8ce"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MoneyVol}==null?0:$F{MoneyVol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="649" y="0" width="65" height="20" uuid="7cdcf688-0306-4b80-a55c-64eef909e865"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ProductTypeVol}==null?0:$V{ProductTypeVol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="71" y="0" width="33" height="20" uuid="849b6e8e-c962-47a8-9282-ba5047b1e12a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Oneself_PaidinAmount}==null?0:$F{Oneself_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="137" y="0" width="33" height="20" uuid="9532eec6-fd17-47f8-80bc-58b09c396c8b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RechargeMoney}==null?0:$F{RechargeMoney}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="597" y="0" width="52" height="20" uuid="0b1c40bf-0331-4c8c-8550-e128f9f8e7d3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MoneyPay}==null?0:$F{MoneyPay}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="714" y="0" width="88" height="20" uuid="b7516741-b2fc-4642-8251-97925366f641"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ProductTypeMoney}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="253" y="0" width="40" height="20" uuid="89597ae7-3093-4bfa-8d33-34f801af85ed"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CustomerCardPre_Vol}==null?0:$F{CustomerCardPre_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="453" y="0" width="45" height="20" uuid="81648132-7897-436a-933d-7728f8380604"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Government_Vol}==null?0:$F{Government_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="498" y="0" width="57" height="20" uuid="14ab7537-ae69-4cf9-a304-6c6bf662121d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="7" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Government_PaidinAmount}==null?0:$F{Government_PaidinAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="333" y="1" width="80" height="20" uuid="f2fde8ea-93cf-4a2c-b7d9-dfa868bce88c"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["第 "+$V{PAGE_NUMBER}+"页 共"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="413" y="1" width="40" height="20" uuid="84b7247e-e9c0-41ae-88e5-fe2a3850bce3"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="宋体" size="9" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}+"页"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="38" height="21" uuid="6f95e89e-2131-43c7-a424-b10bed0598f4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[合计]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="360" height="20" uuid="be22d95e-a297-4e6a-a722-055e08bef696"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[	统计人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="42" width="442" height="20" uuid="8da455f9-1c50-48a7-b248-781190c29bbc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[	审核人]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="211" y="0" width="42" height="21" uuid="a305a507-c073-46bd-8d2b-0417e5be85bb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CustomerCardCharge_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="293" y="0" width="50" height="21" uuid="de08b1fa-7543-4e65-ab43-2c5f9f4f241c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CustomerCardPre_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="397" y="0" width="56" height="21" uuid="5e40e76c-8ac4-4840-a629-eb043ca3e96c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Preferential_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="38" y="0" width="33" height="21" uuid="c55dc879-805c-4b52-8a8e-0d4c42e7e578"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Oneself_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="104" y="0" width="33" height="21" uuid="4bbf95e0-3745-4306-8f17-2e5bfe43b607"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{RechargeVol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="170" y="0" width="41" height="21" uuid="c6d49062-fcf2-4192-9d6d-c785667826ec"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CustomerCardCharge_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="253" y="0" width="40" height="21" uuid="91efe2b1-1797-4601-bc56-196b468702ee"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CustomerCardPre_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="343" y="0" width="54" height="21" uuid="705dfdf0-d31f-4e78-af86-88e5a02f91ab"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Preferential_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="555" y="0" width="42" height="21" uuid="8d148e0e-abea-472c-a5d3-ffb17c3ba19f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{MoneyVol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="649" y="0" width="65" height="21" uuid="f9f39425-4986-4947-ae13-fe58779b6b6a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ProductTypeTotalVol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="71" y="0" width="33" height="21" uuid="6a4b0a17-2544-4ce7-8290-1a4b683c4aea"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Oneself_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="137" y="0" width="33" height="21" uuid="0c01746a-40d8-4444-ab24-f54293703bcb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{RechargeMoney}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="597" y="0" width="52" height="21" uuid="56560e40-0110-49b4-820d-6ffa91d9ab36"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{MoneyPay}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="714" y="0" width="88" height="21" uuid="e6fb43f2-23bc-433d-9eb6-d4178a2be998"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ProductTypeTotalMoney}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="453" y="0" width="45" height="21" uuid="5b2e7bdf-9fd7-402d-9c06-ef08d3ddb445"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Government_Vol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="498" y="0" width="57" height="21" uuid="ef295b20-b805-40b1-80be-28bde524fa8c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Government_PaidinAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="21" width="38" height="21" uuid="a6c87d82-5618-4c61-bfd7-59ecf5b373d4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[实收现金]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="38" y="21" width="56" height="21" uuid="7cc427eb-12eb-4d43-b077-f6256a99e262"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{yingshouMoney}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="343" y="21" width="54" height="21" uuid="9eb3a8c9-5657-4c63-83e9-81703b26f439"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{BankVol}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="21" width="52" height="21" uuid="0eb46a33-5daa-4934-8cdd-30aa1fa04243"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[银行卡升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="21" width="49" height="21" uuid="3d623eda-7a0b-45f0-95fc-061f325ee61e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[银行卡金额]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="446" y="21" width="56" height="21" uuid="59ceac48-5ba6-44ed-90c9-abab41580883"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{BankMoney}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="657" y="21" width="57" height="21" uuid="d5fc8ab6-3c69-4dc5-b79d-7b54beef3aec"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{HeXinTongMoney}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="502" y="21" width="50" height="21" uuid="5a5c0b01-6010-4d10-ab5f-538b381fcabf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[和信通升数]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="608" y="21" width="49" height="21" uuid="e125c840-5cdb-46f1-982d-a3c7c2211f28"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[和信通金额]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="552" y="21" width="56" height="21" uuid="aa919170-794f-4e12-884c-cd95b48936a0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{HeXinTongVol}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="714" y="21" width="88" height="21" uuid="ec03f2f3-6dde-4ab3-879c-fb9ec33e0742"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="宋体" size="5" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[注：“其他”包含银行卡交易、积分交易、和信通交易以及除政府卡外的第三方卡交易]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="21" width="42" height="21" uuid="05c0f1f0-333f-4ca8-a4ce-35f26273abd5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[“其他”
+金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="21" width="43" height="21" uuid="73c804ae-291d-479d-a43e-9d93398ef423"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="8" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[“其他”
+升数]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="235" y="21" width="56" height="21" uuid="e2a06cfc-f54f-40be-8411-53b8cd77b58a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{otherMoney}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="137" y="21" width="56" height="21" uuid="254caae5-48f0-454c-884e-fda0c63660c9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="6" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{otherVol}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

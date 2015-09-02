@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.authority.domain">
+	<class name="Role" table="tb_Role">
+		<id name="Role_RoleNo" column="Role_RoleNo" type="integer">
+			<generator class="identity"></generator>
+		</id>
+		<property name="Role_RoleState" column="Role_RoleState" type="string"></property>
+		<property name="Role_RoleName" column="Role_RoleName" type="string"></property>
+		<property name="Role_RoleSetTime" column="Role_RoleSetTime"></property>
+		<property name="Role_SystemFlag" column="Role_SystemFlag" type="string"></property>
+		<property name="Role_GroupNo" column="Role_GroupNo"></property>
+		<property name="Role_Remark" column="Role_Remark" type="string"></property>
+		<property name="Role_IsSync" column="Role_IsSync" type="string"></property>
+		<property name="Role_SyncDate" column="Role_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

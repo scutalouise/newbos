@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="RestockBill" table="tb_RestockBill">
+		<id name="RestockBill_OrderNum" column="RestockBill_OrderNum" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="RestockBill_RestockNum" column="RestockBill_RestockNum"></property>
+		<property name="RestockBill_StationNo" column="RestockBill_StationNo"></property>
+		<property name="RestockBill_ProductType" column="RestockBill_ProductType"></property>
+		<property name="RestockBill_ProductNum" column="RestockBill_ProductNum"></property>
+		<property name="RestockBill_ShiftDate" column="RestockBill_ShiftDate"></property>
+		<property name="RestockBill_ShiftNo" column="RestockBill_ShiftNo"></property>
+		<property name="RestockBill_StartDate" column="RestockBill_StartDate"></property>
+		<property name="RestockBill_Unit" column="RestockBill_Unit"></property>
+		<property name="RestockBill_CarID" column="RestockBill_CarID"></property>
+		<property name="RestockBill_BottlesCarNo" column="RestockBill_BottlesCarNo"></property>
+		<property name="RestockBill_MStationNo" column="RestockBill_MStationNo"></property>
+		<property name="RestockBill_MIntoTemp" column="RestockBill_MIntoTemp"></property>
+		<property name="RestockBill_MOutTemp" column="RestockBill_MOutTemp"></property>
+		<property name="RestockBill_MIntoPrs" column="RestockBill_MIntoPrs"></property>
+		<property name="RestockBill_MOutPrs" column="RestockBill_MOutPrs"></property>
+		<property name="RestockBill_Mintodate" column="RestockBill_Mintodate"></property>		
+		<property name="RestockBill_MOutdate" column="RestockBill_MOutdate"></property>
+		<property name="RestockBill_DriverName" column="RestockBill_DriverName"></property>
+		<property name="RestockBill_weighname" column="RestockBill_weighname"></property>
+		<property name="RestockBill_Mheader" column="RestockBill_Mheader"></property>
+		<property name="RestockBill_Shipper" column="RestockBill_Shipper"></property>
+		<property name="RestockBill_GasArrived" column="RestockBill_GasArrived"></property>	
+		<property name="RestockBill_GasLeft" column="RestockBill_GasLeft"></property>
+		<property name="RestockBill_CIntoTemp" column="RestockBill_CIntoTemp"></property>
+		<property name="RestockBill_COutTemp" column="RestockBill_COutTemp"></property>
+		<property name="RestockBill_CIntoPrs" column="RestockBill_CIntoPrs"></property>
+		<property name="RestockBill_COutPrs" column="RestockBill_COutPrs"></property>
+		<property name="RestockBill_Seal" column="RestockBill_Seal"></property>
+		<property name="RestockBill_EvilWork" column="RestockBill_EvilWork"></property>
+		<property name="RestockBill_CHead" column="RestockBill_CHead"></property>
+		<property name="RestockBill_UnloadDate" column="RestockBill_UnloadDate"></property>
+		<property name="RestockBill_weather" column="RestockBill_weather"></property>
+		<property name="RestockBill_hairplat" column="RestockBill_hairplat"></property>
+		<property name="RestockBill_Heavy" column="RestockBill_Heavy"></property>
+		<property name="RestockBill_Empty" column="RestockBill_Empty"></property>
+		<property name="RestockBill_Delivery" column="RestockBill_Delivery"></property>
+		<property name="RestockBill_receipts" column="RestockBill_receipts"></property>
+		<property name="RestockBill_lossrate" column="RestockBill_lossrate"></property>
+		<property name="RestockBill_IsSync" column="RestockBill_IsSync"></property>
+		<property name="RestockBill_SyncDate" column="RestockBill_SyncDate"></property>
+		<property name="tankDensity" column="RestockBill_tankDensity"></property>
+		
+	</class>
+
+</hibernate-mapping>

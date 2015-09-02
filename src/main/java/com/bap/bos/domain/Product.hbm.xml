@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Product" table="tb_Product">
+		<id name="Product_Num" column="Product_Num" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="Product_Name" column="Product_Name" type="string"></property>
+		<property name="Product_Type" column="Product_Type" type="string"></property>
+		<property name="Product_SellPrice" column="Product_SellPrice" type="string"></property>
+		<property name="Product_CostPrice" column="Product_CostPrice" type="string"></property>
+		<property name="Product_SupplierNum" column="Product_SupplierNum" type="string"></property>
+		<property name="Product_EffectTime" column="Product_EffectTime"></property>
+		<property name="Product_Active" column="Product_Active" type="string"></property>
+		<property name="Product_IsSync" column="Product_IsSync" type="string"></property>
+		<property name="Product_SyncDate" column="Product_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

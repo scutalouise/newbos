@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.authority.domain">
+	<class name="Group" table="tb_Group">
+		<id name="Group_GroupNo" column="Group_GroupNo" type="integer">
+			<generator class="identity"></generator>
+		</id>
+		<property name="Group_GroupState" column="Group_GroupState" type="string"></property>
+		<property name="Group_GroupName" column="Group_GroupName" type="string"></property>
+		<property name="Group_GroupSetTime" column="Group_GroupSetTime"></property>
+		<property name="Group_SystemFlag" column="Group_SystemFlag" type="string"></property>
+		<property name="Group_Remark" column="Group_Remark" type="string"></property>
+		<property name="Group_IsSync" column="Group_IsSync" type="string"></property>
+		<property name="Group_SyncDate" column="Group_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

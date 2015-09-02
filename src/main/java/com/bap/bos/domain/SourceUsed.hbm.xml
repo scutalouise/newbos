@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="SourceUsed" table="tb_SourceUsed">
+		<composite-id>
+			<key-property name="SourceUsed_StationNo" column="SourceUsed_StationNo"></key-property>
+			<key-property name="SourceUsed_TheDate" column="SourceUsed_TheDate"></key-property>
+		</composite-id>
+		<property name="SourceUsed_MonthlyElec" column="SourceUsed_MonthlyElec"></property>
+		<property name="SourceUsed_MonthlyWater" column="SourceUsed_MonthlyWater"></property>
+	</class>
+
+</hibernate-mapping>

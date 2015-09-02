@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="ChangePetrol" table="tb_ChangePetrol">
+		<id name="ChangePetrol_No" column="ChangePetrol_No" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="ChangePetrol_StationNo" column="ChangePetrol_StationNo"></property>
+		<property name="ChangePetrol_StaffNo" column="ChangePetrol_StaffNo"></property>
+		<property name="ChangePetrol_TankNum" column="ChangePetrol_TankNum"></property>
+		<property name="ChangePetrol_NewPetrolNum" column="ChangePetrol_NewPetrolNum"></property>
+		<property name="ChangePetrol_OldPetrolNum" column="ChangePetrol_OldPetrolNum"></property>
+		<property name="ChangePetrol_EffDate" column="ChangePetrol_EffDate"></property>
+		<property name="ChangePetrol_ChDate" column="ChangePetrol_ChDate"></property>
+		<property name="ChangePetrol_SellPrice" column="ChangePetrol_SellPrice"></property>
+	</class>
+
+</hibernate-mapping>

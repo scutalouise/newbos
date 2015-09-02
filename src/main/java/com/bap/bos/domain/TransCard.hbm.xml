@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="TransCard" table="tb_TransCard" mutable="false">
+		<id name="TransCard_TransNo" column="TransCard_TransNo" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="TransCard_StatinNo" column="TransCard_StatinNo"></property>
+		<property name="TransCard_StaffNo" column="TransCard_StaffNo"></property>
+		<property name="TransCard_CardNo" column="TransCard_CardNo"></property>
+		<property name="TransItem_DitNo" column="TransCard_DitNo"></property>
+		<property name="TransCard_PayAmount" column="TransCard_PayAmount"></property>
+		<property name="TransCard_PaidinAmount" column="TransCard_PaidinAmount"></property>
+		<property name="TransCard_PayVol" column="TransCard_PayVol"></property>
+		<property name="TransCard_ItemCode" column="TransCard_ItemCode"></property>
+		<property name="TransCard_TransType" column="TransCard_TransType"></property>
+		<property name="TransCard_SellPrice" column="TransCard_SellPrice"></property>
+		<property name="TransCard_ShiftNo" column="TransCard_ShiftNo"></property>
+		<property name="TransCard_ShiftDate" column="TransCard_ShiftDate"></property>
+		<property name="TransCard_TxCreateTime" column="TransCard_TxCreateTime"></property>
+		<property name="TransCard_TxApplyTime" column="TransCard_TxApplyTime"></property>
+		<property name="TransCard_ReqType" column="TransCard_ReqType"></property>
+	</class>
+
+</hibernate-mapping>

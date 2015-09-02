@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="SaveToBank" table="tb_SaveToBank">
+		<composite-id>
+			<key-property name="SaveToBank_StationNo" column="SaveToBank_StationNo"></key-property>
+			<key-property name="SaveToBank_Receipt" column="SaveToBank_Receipt"></key-property>
+		</composite-id>
+		<property name="SaveToBank_LastAmount" column="SaveToBank_LastAmount"></property>
+		<property name="SaveToBank_TodayAmount" column="SaveToBank_TodayAmount"></property>
+		<property name="SaveToBank_CanSaved" column="SaveToBank_CanSaved"></property>
+		<property name="SaveToBank_ActSaved" column="SaveToBank_ActSaved"></property>
+		<property name="SaveToBank_Bank" column="SaveToBank_Bank"></property>
+		<property name="SaveToBank_StaffNo" column="SaveToBank_StaffNo"></property>
+		<property name="SaveToBank_SaveTime" column="SaveToBank_SaveTime"></property>
+		<property name="SaveToBank_OperateTime" column="SaveToBank_OperateTime"></property>
+		<property name="SaveToBank_Remark" column="SaveToBank_Remark"></property>
+		<property name="SaveToBank_IsSync" column="SaveToBank_IsSync"></property>
+		<property name="SaveToBank_SyncDate" column="SaveToBank_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

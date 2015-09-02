@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Density" table="tb_Density">
+		<id name="id" column="Density_Id">
+			<generator class="native" ></generator>
+		</id>
+		<property name="Density_StationNo" column="Density_StationNo"></property>
+		<property name="Density_StartDate" column="Density_StartDate"></property>
+		<property name="Density_ProdunctNum" column="Density_ProdunctNum"></property>
+		<property name="Density_Density" column="Density_Density"></property>
+		<property name="Density_endDate" column="Density_endDate"></property>
+		<property name="Density_IsSync" column="Density_IsSync"></property>
+		<property name="Density_SyncDate" column="Density_SyncDate"></property>
+		<property name="densityManual" column="Density_Manual"></property>
+	</class>
+
+</hibernate-mapping>

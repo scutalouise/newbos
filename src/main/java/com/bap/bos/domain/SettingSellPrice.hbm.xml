@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="SettingSellPrice" table="tb_SettingSellPrice">
+		<composite-id>
+			<key-property name="SettingSellPrice_StationNo" column="SettingSellPrice_StationNo"></key-property>
+			<key-property name="SettingSellPrice_ProductNum" column="SettingSellPrice_ProductNum"></key-property>
+			<key-property name="SettingSellPrice_EffDate" column="SettingSellPrice_EffDate"></key-property>
+		</composite-id>
+		<property name="SettingSellPrice_StaffNo" column="SettingSellPrice_StaffNo"></property>
+		<property name="SettingSellPrice_ChDate" column="SettingSellPrice_ChDate"></property>
+		<property name="SettingSellPrice_SellPrice" column="SettingSellPrice_SellPrice"></property>
+		<property name="SettingSellPrice_IsExec" column="SettingSellPrice_IsExec"></property>
+		<property name="SettingSellPrice_IsSync" column="SettingSellPrice_IsSync"></property>
+		<property name="SettingSellPrice_SyncDate" column="SettingSellPrice_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="SellPrice" table="tb_SellPrice">
+		<id name="SellPrice_Phy_Noz" column="SellPrice_Phy_Noz" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="SellPrice_ProductNum" column="SellPrice_ProductNum"></property>
+		<property name="SellPrice_SellPrice" column="SellPrice_SellPrice"></property>
+	</class>
+
+</hibernate-mapping>

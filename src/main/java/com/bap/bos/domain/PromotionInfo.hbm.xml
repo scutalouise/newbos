@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="PromotionInfo" table="tb_PromotionInfo">
+		<id name="PromotionInfo_Num" column="PromotionInfo_Num">
+			<generator class="native" ></generator>
+		</id>
+		<property name="PromotionInfo_Name" column="PromotionInfo_Name"></property>
+		<property name="PromotionInfo_Count" column="PromotionInfo_Count"></property>
+		<property name="PromotionInfo_Remark" column="PromotionInfo_Remark"></property>
+	</class>
+
+</hibernate-mapping>

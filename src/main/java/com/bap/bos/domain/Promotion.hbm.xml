@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Promotion" table="tb_Promotion">
+		<composite-id>
+			<key-property name="Promotion_ProductNum" column="Promotion_ProductNum"></key-property>
+			<key-property name="Promotion_MoneyLow" column="Promotion_MoneyLow"></key-property>
+			<key-property name="Promotion_MoneyHigh" column="Promotion_MoneyHigh"></key-property>
+			<key-property name="Promotion_TimeStart" column="Promotion_TimeStart"></key-property>
+			<key-property name="Promotion_TimeEnd" column="Promotion_TimeEnd"></key-property>
+		</composite-id>
+		<property name="Promotion_InfoNum" column="Promotion_InfoNum"></property>	
+	</class>
+
+</hibernate-mapping>

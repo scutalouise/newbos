@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="PositionType" table="tb_PositionType">
+		<id name="PositionType_Num" column="PositionType_Num" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="PositionType_Desc" column="PositionType_Desc" type="string"></property>
+		<property name="PositionType_IsSync" column="PositionType_IsSync" type="string"></property>
+		<property name="PositionType_SyncDate" column="PositionType_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

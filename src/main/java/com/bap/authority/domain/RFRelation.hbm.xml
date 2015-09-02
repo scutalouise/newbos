@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.authority.domain">
+	<class name="RFRelation" table="tb_RFRelation">
+		<composite-id>
+			<key-property name="RFRelation_RoleNo" column="RFRelation_RoleNo" type="integer"></key-property>
+			<key-property name="RFRelation_FunctionNo" column="RFRelation_FunctionNo" type="integer"></key-property>
+		</composite-id>
+		<property name="RFRelation_IsSync" column="RFRelation_IsSync" type="string"></property>
+		<property name="RFRelation_SyncDate" column="RFRelation_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

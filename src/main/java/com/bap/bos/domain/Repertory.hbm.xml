@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Repertory" table="tb_Repertory">
+		<composite-id>
+			<key-property name="Repertory_StationNo" column="Repertory_StationNo"></key-property>
+			<key-property name="Repertory_TankNum" column="Repertory_TankNum"></key-property>
+			<key-property name="Repertory_CreateTime" column="Repertory_CreateTime"></key-property>
+			<key-property name="Repertory_ShiftNo" column="Repertory_ShiftNo"></key-property>
+		</composite-id>
+		<property name="Repertory_ProductType" column="Repertory_ProductType"></property>
+		<property name="Repertory_ProductNum" column="Repertory_ProductNum"></property>
+		<property name="Repertory_ProductVol" column="Repertory_ProductVol"></property>
+		<property name="Repertory_TotalVol" column="Repertory_TotalVol" ></property>
+		<property name="Repertory_WaterLevel" column="Repertory_WaterLevel"></property>
+		<property name="Repertory_PetrolLevel" column="Repertory_PetrolLevel"></property>	
+		<property name="Repertory_Temp" column="Repertory_Temp"></property>
+		<property name="Repertory_AddTime" column="Repertory_AddTime"></property>
+		<property name="Repertory_Unit" column="Repertory_Unit"></property>
+		<property name="Repertory_Remark" column="Repertory_Remark"></property>
+		<property name="Repertory_IsSync" column="Repertory_IsSync"></property>
+		<property name="Repertory_SyncDate" column="Repertory_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

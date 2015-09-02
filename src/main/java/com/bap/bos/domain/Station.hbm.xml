@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Station" table="tb_Station">
+		<id name="Station_No" column="Station_No" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="Station_Name" column="Station_Name" type="string"></property>
+		<property name="Station_Aliases" column="Station_Aliases" type="string"></property>
+		<property name="Station_municipalityNo" column="Station_municipalityNo" type="string"></property>
+		<property name="Station_Address" column="Station_Address" type="string"></property>
+		<property name="Station_Phone1" column="Station_Phone1" type="string"></property>
+		<property name="Station_Phone2" column="Station_Phone2" type="string"></property>
+		<property name="Station_Fax" column="Station_Fax" type="string"></property>
+		<property name="Station_Type" column="Station_Type" type="string"></property>
+		<property name="Station_IP" column="Station_IP" type="string"></property>
+		<property name="Station_BusinessModel" column="Station_BusinessModel" type="string"></property>
+		<property name="Station_Class" column="Station_Class" type="string"></property>
+		<property name="Station_IsSync" column="Station_IsSync" type="string"></property>
+		<property name="Station_SyncDate" column="Station_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Shift" table="tb_Shift">
+		<composite-id>
+			<key-property name="Shift_StationNo" column="Shift_StationNo"></key-property>
+			<key-property name="Shift_ShiftDate" column="Shift_ShiftDate"></key-property>
+			<key-property name="Shift_ShiftNo" column="Shift_ShiftNo"></key-property>
+			<key-property name="Shift_CreateTime" column="Shift_CreateTime"></key-property>
+		</composite-id>
+		<property name="Shift_StaffNo" column="Shift_StaffNo"></property>
+		<property name="Shift_StartTime" column="Shift_StartTime"></property>
+		<property name="Shift_EndTime" column="Shift_EndTime" ></property>
+	<!-- 	<property name="Shift_VerifyTime" column="Shift_VerifyTime"></property>
+		<property name="Shift_VerifyStaffNo" column="Shift_VerifyStaffNo"></property>
+		<property name="Shift_VerifyStatus" column="Shift_VerifyStatus" ></property> -->
+		<property name="Shift_ShiftStatus" column="Shift_ShiftStatus" ></property>
+		<property name="Shift_IsSync" column="Shift_IsSync" ></property>
+		<property name="Shift_SyncDate" column="Shift_SyncDate" ></property>
+	</class>
+
+</hibernate-mapping>

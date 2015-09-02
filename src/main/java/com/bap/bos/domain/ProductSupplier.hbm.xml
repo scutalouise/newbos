@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="ProductSupplier" table="tb_ProductSupplier">
+		<id name="ProductSupplier_key" column="ProductSupplier_key">
+			<generator class="native" ></generator>
+		</id>
+		<property name="ProductSupplier_Name" column="ProductSupplier_Name"></property>
+		<property name="ProductSupplier_Tel" column="ProductSupplier_Tel"></property>
+		<property name="ProductSupplier_Cell" column="ProductSupplier_Cell"></property>
+		<property name="ProductSupplier_Fax" column="ProductSupplier_Fax"></property>
+		<property name="ProductSupplier_Address" column="ProductSupplier_Address"></property>
+		<property name="ProductSupplier_Remark" column="ProductSupplier_Remark"></property>
+	</class>
+
+</hibernate-mapping>

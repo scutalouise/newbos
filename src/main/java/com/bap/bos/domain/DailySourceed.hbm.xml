@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="DailySourceed" table="tb_DailySourceed">
+		<composite-id>
+			<key-property name="DailySourced_StationNo" column="DailySourced_StationNo"></key-property>
+			<key-property name="DailySourced_CurrDate" column="DailySourced_CurrDate"></key-property>
+		</composite-id>
+		<property name="DailySourced_ElecNum" column="DailySourced_ElecNum"></property>
+		<property name="DailySourced_ElecNumOver" column="DailySourced_ElecNumOver" type="string"></property>
+		<property name="DailySourced_WaterNum" column="DailySourced_WaterNum"></property>
+		<property name="DailySourced_WaterNumOver" column="DailySourced_WaterNumOver" type="string"></property>
+		<property name="DailySourced_IsSync" column="DailySourced_IsSync" type="string"></property>
+		<property name="DailySourced_SyncDate" column="DailySourced_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

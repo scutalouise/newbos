@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="CustomerType" table="tb_CustomerType">
+		<id name="CustomerType_ID" column="CustomerType_ID" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="CustomerType_Desc" column="CustomerType_Desc"></property>
+	</class>
+
+</hibernate-mapping>

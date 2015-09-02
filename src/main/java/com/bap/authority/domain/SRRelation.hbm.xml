@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.authority.domain">
+	<class name="SRRelation" table="tb_SRRelation">
+		<composite-id>
+			<key-property name="SRRelation_RoleNo" column="SRRelation_RoleNo" type="integer"></key-property>
+			<key-property name="SRRelation_StaffNo" column="SRRelation_StaffNo" type="string"></key-property>
+		</composite-id>
+		<property name="SRRelation_IsSync" column="SRRelation_IsSync" type="string"></property>
+		<property name="SRRelation_SyncDate" column="SRRelation_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="OilUnloadingData" table="tb_OilUnloadingData">
+		<composite-id>
+			<key-property name="OilUnloadingData_OrderNum" column="OilUnloadingData_OrderNum"></key-property>
+			<key-property name="oilUnloadingData_TankId" column="OilUnloadingData_TankId"></key-property>
+			<key-property name="OilUnloadingData_State" column="OilUnloadingData_State"></key-property>
+		</composite-id>
+		<property name="OilUnloadingData_PumpSum" column="OilUnloadingData_PumpSum"></property>
+		<property name="OilUnloadingData_TotalVol" column="OilUnloadingData_TotalVol"></property>
+		<property name="OilUnloadingData_OilVol" column="OilUnloadingData_OilVol"></property>
+		<property name="OilUnloadingData_Temp" column="OilUnloadingData_Temp"></property>
+		<property name="OilUnloadingData_WaterHeight" column="OilUnloadingData_WaterHeight"></property>
+		<property name="OilUnloadingData_OilHeight" column="OilUnloadingData_OilHeight"></property>
+	</class>
+
+</hibernate-mapping>

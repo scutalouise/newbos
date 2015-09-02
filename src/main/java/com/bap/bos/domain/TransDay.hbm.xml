@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="TransDay" table="tb_TransDayNozzleNo">
+		<composite-id>
+			<key-property name="TransDay_TransDate" column="TransDay_TransDate"></key-property>
+			<key-property name="TransDay_StationNo" column="TransDay_StationNo"></key-property>
+			<key-property name="TransDay_CustomerType" column="TransDay_CustomerType"></key-property>
+			<key-property name="TransDay_NozzleNo" column="TransDay_NozzleNo"></key-property>
+		</composite-id>
+		<property name="TransDay_TransMoney" column="TransDay_TransMoney"></property>
+		<property name="TransDay_PaidInMoney" column="TransDay_PaidInMoney"></property>
+		<property name="TransDay_TransVol" column="TransDay_TransVol"></property>
+		<property name="TransDay_TransCount" column="TransDay_TransCount"></property>
+		<property name="TransDay_IsSync" column="TransDay_IsSync"></property>
+		<property name="TransDay_SyncDate" column="TransDay_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

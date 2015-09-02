@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="Staff" table="tb_Staff">
+		<id name="Staff_No" column="Staff_No" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="Staff_CardNo" column="Staff_CardNo" type="string"></property>
+		<property name="Staff_Name" column="Staff_Name" type="string"></property>
+		<property name="Staff_Sex" column="Staff_Sex" type="string"></property>
+		<property name="Staff_Phone" column="Staff_Phone" type="string"></property>
+		<property name="Staff_ID" column="Staff_ID" type="string"></property>
+		<property name="Staff_Address" column="Staff_Address" type="string"></property>
+		<property name="Staff_Position" column="Staff_Position" type="string"></property>
+		<property name="Staff_PW" column="Staff_PW" type="string"></property>
+		<property name="Staff_JoinTime" column="Staff_JoinTime"></property>
+		<property name="Staff_LeftTime" column="Staff_LeftTime"></property>
+		<property name="Staff_IsSync" column="Staff_IsSync" type="string"></property>
+		<property name="Staff_SyncDate" column="Staff_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

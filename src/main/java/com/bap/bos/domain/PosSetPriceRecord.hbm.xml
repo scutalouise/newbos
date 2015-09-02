@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="PosSetPriceRecord" table="tb_PosSetPriceRecord">
+		<id name="PosSetPriceRecord_PriceNum" column="PosSetPriceRecord_PriceNum" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="PosSetPriceRecord_StationNo" column="PosSetPriceRecord_StationNo"></property>
+		<property name="PosSetPriceRecord_StaffNo" column="PosSetPriceRecord_StaffNo"></property>
+		<property name="PosSetPriceRecord_ProductNum" column="PosSetPriceRecord_ProductNum"></property>
+		<property name="PosSetPriceRecord_Pump" column="PosSetPriceRecord_Pump"></property>
+		<property name="PosSetPriceRecord_EffDate" column="PosSetPriceRecord_EffDate"></property>
+		<property name="PosSetPriceRecord_ChDate" column="PosSetPriceRecord_ChDate"></property>
+		<property name="PosSetPriceRecord_SellPrice" column="PosSetPriceRecord_SellPrice"></property>
+		<property name="PosSetPriceRecord_Result" column="PosSetPriceRecord_Result"></property>
+	</class>
+
+</hibernate-mapping>

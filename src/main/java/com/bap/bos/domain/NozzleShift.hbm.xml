@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.bos.domain">
+	<class name="NozzleShift" table="tb_NozzleShift">
+		<composite-id>
+			<key-property name="NozzleShift_StationNo" column="NozzleShift_StationNo"></key-property>
+			<key-property name="NozzleShift_ShiftDate" column="NozzleShift_ShiftDate"></key-property>
+			<key-property name="NozzleShift_ShiftNo" column="NozzleShift_ShiftNo"></key-property>
+			<key-property name="NozzleShift_NozzleId" column="NozzleShift_NozzleId"></key-property>
+			<key-property name="NozzleShift_CreateTime" column="NozzleShift_CreateTime"></key-property>		
+		</composite-id>
+		<property name="NozzleShift_ProductNum" column="NozzleShift_ProductNum"></property>
+		<property name="NozzleShift_StartVol" column="NozzleShift_StartVol"></property>
+		<property name="NozzleShift_EndVol" column="NozzleShift_EndVol"></property>
+		<property name="NozzleShift_IsSync" column="NozzleShift_IsSync"></property>
+		<property name="NozzleShift_SyncDate" column="NozzleShift_SyncDate"></property>
+	</class>
+
+</hibernate-mapping>

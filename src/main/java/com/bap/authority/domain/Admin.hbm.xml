@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bap.authority.domain">
+	<class name="Admin" table="tb_admin">
+		<id name="admin_admin" column="admin_admin" type="string">
+			<generator class="assigned" ></generator>
+		</id>
+		<property name="admin_pas" column="admin_pas" type="string"></property>
+	</class>
+
+</hibernate-mapping>

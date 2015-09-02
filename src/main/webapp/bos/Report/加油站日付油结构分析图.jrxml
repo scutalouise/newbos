@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="加油站日时点加油分析图" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59870d46-195d-437b-88bf-e6e21f9a7325">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="12"/>
+	<parameter name="Date" class="java.lang.String"/>
+	<parameter name="stationName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select TransType_Desc,sum(TransDay_TransVol) from tb_TransDayNozzleNo
+left join tb_TransType on TransType_Type=TransDay_CustomerType
+where TransDay_TransDate=$P{Date} group by TransDay_CustomerType]]>
+	</queryString>
+	<field name="TransType_Desc" class="java.lang.String">
+		<fieldDescription><![CDATA[描述]]></fieldDescription>
+	</field>
+	<field name="sum(TransDay_TransVol)" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="33" uuid="dbcf94be-480d-40a2-848d-16d064e08001"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stationName}+"日付油结构分析图"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="33" width="802" height="33" uuid="4733afab-6f5f-4711-a3e8-db858aa83cd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA["日期："+$P{Date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="450" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="0" width="802" height="450" uuid="fb08f171-adf5-48e8-bfae-4a58c566a452"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{TransType_Desc}]]></keyExpression>
+					<valueExpression><![CDATA[$F{sum(TransDay_TransVol)}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{2}({1}L){0}">
+					<plot/>
+					<itemLabel>
+						<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>
